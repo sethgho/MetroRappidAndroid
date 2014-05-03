@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/default_rhythm"
+    android:padding="@dimen/default_padding">
+
+    <TextView
+        android:id="@+id/lblStopName"
+        tools:text="Some Stop Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/lblDistance"
+        tools:text="1200 ft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"/>
+
+    <TextView
+        tools:text="5m 10m 22m"
+        android:id="@+id/lblBusTimes"
+        android:layout_below="@+id/lblStopName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>
