@@ -55,7 +55,7 @@ public class StopListActivity extends BaseLocationActivity {
     private void initializeAdapter(){
         mStopRepo = new FileStopRepository(getApplicationContext());
         final CapStopCollection stops = mStopRepo.getStopsForRoute(801, RouteDirection.North);
-        final StopListAdapter adapter = new StopListAdapter(getApplicationContext(), stops);
+        final StopListAdapter adapter = new StopListAdapter(stops);
         mList.setAdapter(adapter);
     }
 

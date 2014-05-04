@@ -1,16 +1,12 @@
 package co.createch.MetroRappid.ui;
 
-import android.content.Context;
 import android.database.DataSetObserver;
 import android.location.Location;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
-import android.widget.TextView;
 
-import co.createch.MetroRappid.R;
 import co.createch.MetroRappid.model.CapStop;
 import co.createch.MetroRappid.model.CapStopCollection;
 
@@ -20,10 +16,8 @@ import co.createch.MetroRappid.model.CapStopCollection;
 public class StopListAdapter extends BaseAdapter implements ListAdapter {
 
     private CapStopCollection mList;
-    private Context mContext;
 
-    public StopListAdapter(Context context, CapStopCollection stops) {
-        mContext = context;
+    public StopListAdapter(CapStopCollection stops) {
         mList = stops;
     }
 
@@ -59,20 +53,12 @@ public class StopListAdapter extends BaseAdapter implements ListAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View v = convertView;
+        StopViewRow v = (StopViewRow)convertView;
         if(v == null)
         {
-            v = LayoutInflater.from(mContext).inflate(R.layout.store_list_row,null);
+            v = StopViewRow.inflate(parent);
         }
-
-        final CapStop stop = getItem(position);
-        TextView stopName = (TextView)v.findViewById(R.id.lblStopName);
-        TextView busTimes = (TextView)v.findViewById(R.id.lblBusTimes);
-        TextView distance = (TextView)v.findViewById(R.id.lblDistance);
-        stopName.setText(stop.name);
-        busTimes.setText("5m 22m 31m");
-        distance.setText(String.format("%d m", (int)stop.distance));
-        distance.setVisibility(stop.knowsDistance() ? View.VISIBLE : View.INVISIBLE);
+        v.loadStop(getItem(position));
         return v;
     }
 
@@ -93,12 +79,12 @@ public class StopListAdapter extends BaseAdapter implements ListAdapter {
 
     @Override
     public boolean areAllItemsEnabled() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled(int position) {
-        return false;
+        return true;
     }
 
     public void updateLocation(Location location) {
