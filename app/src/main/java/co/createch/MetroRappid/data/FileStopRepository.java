@@ -3,6 +3,7 @@ package co.createch.MetroRappid.data;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
@@ -59,7 +60,9 @@ public class FileStopRepository implements StopRepository {
         CapStopCollection stopList = new CapStopCollection();
         InputStream raw = mContext.getResources().openRawResource(fileId);
         Reader reader = new BufferedReader(new InputStreamReader(raw));
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(RouteDirection.class, new RouteDirectionDeserializer())
+                .create();
         Type listType = new TypeToken<CapStopCollection>(){}.getType();
         stopList = gson.fromJson(reader, listType);
         return stopList;
