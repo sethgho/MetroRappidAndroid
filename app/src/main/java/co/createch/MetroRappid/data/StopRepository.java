@@ -1,8 +1,6 @@
 package co.createch.MetroRappid.data;
 
-import java.util.List;
-
-import co.createch.MetroRappid.model.CapStop;
+import co.createch.MetroRappid.model.CapStopCollection;
 import co.createch.MetroRappid.model.RouteDirection;
 
 /**
@@ -10,5 +8,5 @@ import co.createch.MetroRappid.model.RouteDirection;
  */
 public interface StopRepository {
 
-    public List<CapStop> getStopsForRoute(int routeId, RouteDirection direction);
+    public CapStopCollection getStopsForRoute(int routeId, RouteDirection direction);
 }

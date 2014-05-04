@@ -1,25 +1,34 @@
 package co.createch.MetroRappid.ui;
 
+import android.location.Location;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
-import java.util.List;
+import com.google.android.gms.common.ConnectionResult;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import co.createch.MetroRappid.R;
 import co.createch.MetroRappid.data.FileStopRepository;
 import co.createch.MetroRappid.data.StopRepository;
-import co.createch.MetroRappid.model.CapStop;
+import co.createch.MetroRappid.model.CapStopCollection;
 import co.createch.MetroRappid.model.RouteDirection;
 
 /**
  * Created by Seth Gholson on 5/2/14.
  */
-public class StopListActivity extends BaseActivity {
+public class StopListActivity extends BaseLocationActivity {
 
     @InjectView(R.id.list)
     public ListView mList;
+
+    @InjectView(R.id.loading)
+    public View mLoadingView;
+
+    @InjectView(R.id.text)
+    public TextView mLoadingLabel;
 
     private StopRepository mStopRepo;
 
@@ -28,11 +37,40 @@ public class StopListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stop_list);
         ButterKnife.inject(this);
+        initializeAdapter();
+        showLoading(R.string.getting_location);
+        if(servicesConnected())
+        {
+            mLocationClient.connect();
+        }
+    }
+
+    @Override
+    public void onConnected(Bundle dataBundle) {
+        Location location = mLocationClient.getLastLocation();
+        ((StopListAdapter)mList.getAdapter()).updateLocation(location);
+        hideLoading();
+    }
+
+    private void initializeAdapter(){
         mStopRepo = new FileStopRepository(getApplicationContext());
-
-        final List<CapStop> stops = mStopRepo.getStopsForRoute(801, RouteDirection.North);
-        StopListAdapter adapter = new StopListAdapter(getApplicationContext(), stops);
+        final CapStopCollection stops = mStopRepo.getStopsForRoute(801, RouteDirection.North);
+        final StopListAdapter adapter = new StopListAdapter(getApplicationContext(), stops);
         mList.setAdapter(adapter);
+    }
 
+    private void showLoading(int labelId){
+        mLoadingView.setVisibility(View.VISIBLE);
+        mLoadingLabel.setText(labelId);
+    }
+
+    private void hideLoading() {
+        mLoadingView.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        super.onConnectionFailed(connectionResult);
+        hideLoading();
     }
 }

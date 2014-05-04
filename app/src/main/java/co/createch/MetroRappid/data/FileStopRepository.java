@@ -10,19 +10,17 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 
 import co.createch.MetroRappid.R;
-import co.createch.MetroRappid.model.CapStop;
+import co.createch.MetroRappid.model.CapStopCollection;
 import co.createch.MetroRappid.model.RouteDirection;
 
 /**
  * Created by Seth Gholson on 5/2/14.
  */
 public class FileStopRepository implements StopRepository {
-    private static List<CapStop> mNorthStops;
-    private static List<CapStop> mSouthStops;
+    private static CapStopCollection mNorthStops;
+    private static CapStopCollection mSouthStops;
     private Context mContext;
 
     public FileStopRepository(Context applicationContext)
@@ -31,7 +29,7 @@ public class FileStopRepository implements StopRepository {
     }
 
     @Override
-    public List<CapStop> getStopsForRoute(int routeId, RouteDirection direction) {
+    public CapStopCollection getStopsForRoute(int routeId, RouteDirection direction) {
         switch(direction)
         {
             case North: return getNorthStops();
@@ -40,7 +38,7 @@ public class FileStopRepository implements StopRepository {
         }
     }
 
-    private List<CapStop> getSouthStops() {
+    private CapStopCollection getSouthStops() {
         if(mSouthStops == null)
         {
             mSouthStops = loadStops(R.raw.stops_801_0);
@@ -48,7 +46,7 @@ public class FileStopRepository implements StopRepository {
         return mSouthStops;
     }
 
-    private List<CapStop> getNorthStops() {
+    private CapStopCollection getNorthStops() {
         if(mNorthStops == null)
         {
             mNorthStops = loadStops(R.raw.stops_801_1);
@@ -56,13 +54,13 @@ public class FileStopRepository implements StopRepository {
         return mNorthStops;
     }
 
-    private List<CapStop> loadStops(int fileId)
+    private CapStopCollection loadStops(int fileId)
     {
-        ArrayList<CapStop> stopList = new ArrayList<CapStop>();
+        CapStopCollection stopList = new CapStopCollection();
         InputStream raw = mContext.getResources().openRawResource(fileId);
         Reader reader = new BufferedReader(new InputStreamReader(raw));
         Gson gson = new Gson();
-        Type listType = new TypeToken<List<CapStop>>(){}.getType();
+        Type listType = new TypeToken<CapStopCollection>(){}.getType();
         stopList = gson.fromJson(reader, listType);
         return stopList;
     }

@@ -2,38 +2,39 @@ package co.createch.MetroRappid.ui;
 
 import android.content.Context;
 import android.database.DataSetObserver;
+import android.location.Location;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
-import java.util.List;
-
 import co.createch.MetroRappid.R;
 import co.createch.MetroRappid.model.CapStop;
+import co.createch.MetroRappid.model.CapStopCollection;
 
 /**
  * Created by Seth Gholson on 5/2/14.
  */
-public class StopListAdapter implements ListAdapter {
+public class StopListAdapter extends BaseAdapter implements ListAdapter {
 
-    private List<CapStop> mList;
+    private CapStopCollection mList;
     private Context mContext;
 
-    public StopListAdapter(Context context, List<CapStop> stops) {
+    public StopListAdapter(Context context, CapStopCollection stops) {
         mContext = context;
         mList = stops;
     }
 
     @Override
     public void registerDataSetObserver(DataSetObserver observer) {
-
+        super.registerDataSetObserver(observer);
     }
 
     @Override
     public void unregisterDataSetObserver(DataSetObserver observer) {
-
+        super.unregisterDataSetObserver(observer);
     }
 
     @Override
@@ -70,7 +71,8 @@ public class StopListAdapter implements ListAdapter {
         TextView distance = (TextView)v.findViewById(R.id.lblDistance);
         stopName.setText(stop.name);
         busTimes.setText("5m 22m 31m");
-        distance.setText("1600m");
+        distance.setText(String.format("%d m", (int)stop.distance));
+        distance.setVisibility(stop.knowsDistance() ? View.VISIBLE : View.INVISIBLE);
         return v;
     }
 
@@ -97,5 +99,10 @@ public class StopListAdapter implements ListAdapter {
     @Override
     public boolean isEnabled(int position) {
         return false;
+    }
+
+    public void updateLocation(Location location) {
+        mList.setLocation(location);
+        notifyDataSetChanged();
     }
 }
