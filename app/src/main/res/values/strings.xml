@@ -4,5 +4,6 @@
     <string name="app_name">MetroRappid</string>
     <string name="hello_world">Hello world!</string>
     <string name="getting_location">Getting Location</string>
+    <string name="last_seen">last seen</string>
 
 </resources>

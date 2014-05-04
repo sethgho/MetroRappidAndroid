@@ -16,7 +16,9 @@ import co.createch.MetroRappid.model.CapStop;
 public class StopViewRow extends RelativeLayout {
 
     private TextView mStopName;
-    private TextView mBusTimes;
+    private TextView mBusTime1;
+    private TextView mBusTime2;
+    private TextView mBusTime3;
     private TextView mDistance;
 
     public StopViewRow(Context context, AttributeSet attrs) {
@@ -24,21 +26,25 @@ public class StopViewRow extends RelativeLayout {
     }
 
     public static StopViewRow inflate(View parent){
-        StopViewRow v = (StopViewRow)LayoutInflater.from(parent.getContext()).inflate(R.layout.stop_list_row, null);
+        StopViewRow v = (StopViewRow)LayoutInflater.from(parent.getContext()).inflate(R.layout.stop_list_row_tall, null);
         v.setupChildren();
         return v;
     }
 
     private void setupChildren(){
         mStopName = (TextView)findViewById(R.id.lblStopName);
-        mBusTimes = (TextView)findViewById(R.id.lblBusTimes);
+        mBusTime1 = (TextView)findViewById(R.id.lblBusTime1);
+        mBusTime2 = (TextView)findViewById(R.id.lblBusTime2);
+        mBusTime3 = (TextView)findViewById(R.id.lblBusTime3);
         mDistance = (TextView)findViewById(R.id.lblDistance);
     }
 
     public void loadStop(CapStop stop){
         mStopName.setText(stop.name);
-        mBusTimes.setText("5m 22m 31m");
+        mBusTime1.setText("5m\nlast seen\n3m ago");
+        mBusTime2.setText("14m\nlast seen\n1m ago");
+        mBusTime3.setText("32m\nlast seen\n2m ago");
         mDistance.setText(String.format("%d m", (int)stop.distance));
-        mDistance.setVisibility(stop.knowsDistance() ? View.VISIBLE : View.INVISIBLE);
+        mDistance.setVisibility(stop.knowsDistance() ? View.VISIBLE : View.GONE);
     }
 }

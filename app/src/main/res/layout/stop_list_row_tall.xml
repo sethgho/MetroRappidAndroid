@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<co.createch.MetroRappid.ui.StopViewRow xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/default_padding">
+
+    <TextView
+        android:id="@+id/lblStopName"
+        tools:text="Some Stop Name"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:layout_marginBottom="8dp"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/lblDistance"/>
+
+    <TextView
+        android:id="@+id/lblDistance"
+        tools:text="1200 ft"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"/>
+
+    <TextView
+        tools:text="5m\nlast seen\n2m ago"
+        android:id="@+id/lblBusTime1"
+        android:textAlignment="center"
+        android:gravity="center_horizontal"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_below="@+id/lblStopName"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content" />
+    <TextView
+        tools:text="14m\nlast seen\n1m ago"
+        android:id="@+id/lblBusTime2"
+        android:textAlignment="center"
+        android:gravity="center_horizontal"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_below="@+id/lblStopName"
+        android:layout_toRightOf="@+id/lblBusTime1"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content" />
+    <TextView
+        tools:text="32m\nlast seen\n3m ago"
+        android:id="@+id/lblBusTime3"
+        android:textAlignment="center"
+        android:gravity="center_horizontal"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_below="@+id/lblStopName"
+        android:layout_toRightOf="@+id/lblBusTime2"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content" />
+
+</co.createch.MetroRappid.ui.StopViewRow>
