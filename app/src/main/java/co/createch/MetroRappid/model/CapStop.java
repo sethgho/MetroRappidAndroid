@@ -71,3 +71,4 @@ public class CapStop implements Comparable { //extend Maps marker?
         return isDistanceKnown;
     }
 }
+
