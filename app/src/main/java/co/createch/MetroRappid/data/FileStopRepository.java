@@ -12,7 +12,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Type;
 
-import co.createch.MetroRappid.R;
+import co.createch.MetroRappidAndroid.R;
 import co.createch.MetroRappid.model.CapStopCollection;
 import co.createch.MetroRappid.model.RouteDirection;
 

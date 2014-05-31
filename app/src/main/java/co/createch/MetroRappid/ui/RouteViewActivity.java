@@ -4,7 +4,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import co.createch.MetroRappid.R;
+import co.createch.MetroRappidAndroid.R;
 
 public class RouteViewActivity extends ActionBarActivity {
 

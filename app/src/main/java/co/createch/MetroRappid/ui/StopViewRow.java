@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import co.createch.MetroRappid.R;
+import co.createch.MetroRappidAndroid.R;
 import co.createch.MetroRappid.model.CapStop;
 
 /**
