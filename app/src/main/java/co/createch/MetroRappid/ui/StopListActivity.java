@@ -93,6 +93,7 @@ public class StopListActivity extends BaseLocationActivity implements AdapterVie
         mList.setOnItemClickListener(this);
     }
 
+
     private void showLoading(int labelId) {
         mLoadingView.setVisibility(View.VISIBLE);
         mLoadingLabel.setText(labelId);

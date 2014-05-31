@@ -6,6 +6,9 @@ import org.simpleframework.xml.Root;
 @Root(strict=false)
 public class TripRealtimeInfo
 {
+    @Element(name="Valid")
+    public String valid;
+
     @Element(name="Estimatedtime")
     public String estimatedTime;
 
@@ -20,4 +23,10 @@ public class TripRealtimeInfo
 
     @Element(name="Long")
     public double longitude;
+
+    @Element(name="Trend")
+    public String trend;
+
+    @Element(name="Stopped")
+    public String stopped;
 }

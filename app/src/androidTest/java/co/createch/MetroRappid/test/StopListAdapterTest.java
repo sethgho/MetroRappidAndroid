@@ -12,7 +12,7 @@ import co.createch.MetroRappid.ui.StopListAdapter;
 public class StopListAdapterTest extends InstrumentationTestCase {
 
     CapStopCollection mStops;
-    StopListAdapter mAdapter;
+    StopListAdapter m`Adapter;
 
     @Override
     protected void setUp() throws Exception {
