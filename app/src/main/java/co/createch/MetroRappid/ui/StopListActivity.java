@@ -48,7 +48,9 @@ public class StopListActivity extends BaseLocationActivity {
     @Override
     public void onConnected(Bundle dataBundle) {
         Location location = mLocationClient.getLastLocation();
-        ((StopListAdapter)mList.getAdapter()).updateLocation(location);
+        if(location != null) {
+            ((StopListAdapter) mList.getAdapter()).updateLocation(location);
+        }
         hideLoading();
     }
 
