@@ -22,8 +22,7 @@ public class FileRouteRepository implements RouteRepository {
 
     private Context mContext;
 
-    public FileRouteRepository(Context context)
-    {
+    public FileRouteRepository(Context context) {
         mContext = context;
     }
 
@@ -33,16 +32,13 @@ public class FileRouteRepository implements RouteRepository {
         return getRoutePath(resourceId);
     }
 
-    private int getResourceIdForRoute(String routeId, RouteDirection direction)
-    {
+    private int getResourceIdForRoute(String routeId, RouteDirection direction) {
         String resourceName = String.format("shapes_%s_%d", routeId, direction.getKey());
         return mContext.getResources().getIdentifier(resourceName, "raw", mContext.getPackageName());
     }
 
-    private RoutePath getRoutePath(int resource)
-    {
-        if(resource == 0)
-        {
+    private RoutePath getRoutePath(int resource) {
+        if (resource == 0) {
             return null;
         }
 
@@ -52,7 +48,8 @@ public class FileRouteRepository implements RouteRepository {
         final Gson gson = new GsonBuilder()
                 .registerTypeAdapter(RouteDirection.class, new RouteDirectionDeserializer())
                 .create();
-        Type listType = new TypeToken<RoutePath>(){}.getType();
+        Type listType = new TypeToken<RoutePath>() {
+        }.getType();
         routePath = gson.fromJson(reader, listType);
         return routePath;
     }
