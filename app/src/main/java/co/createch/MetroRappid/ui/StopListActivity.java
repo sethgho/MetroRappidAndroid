@@ -90,6 +90,7 @@ public class StopListActivity extends BaseLocationActivity implements AdapterVie
         final CapStopCollection stops = mStopRepo.getStopsForRoute(801, RouteDirection.North);
         final StopListAdapter adapter = new StopListAdapter(stops);
         mList.setAdapter(adapter);
+        mList.setOnItemClickListener(this);
     }
 
     private void showLoading(int labelId) {
@@ -107,14 +108,12 @@ public class StopListActivity extends BaseLocationActivity implements AdapterVie
         hideLoading();
     }
 
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         StopViewRow row = (StopViewRow) view;
-        Intent i = new Intent(this, RouteViewActivity.class);
-        CapStop stop = row.stop;
-        i.putExtra(RouteViewActivity.CAP_STOP, stop);
-        startActivity(i);
-
+        Intent intent = new Intent(adapterView.getContext(),RouteViewActivity.class);
+        intent.putExtra(RouteViewActivity.CAP_STOP, row.stop);
+        startActivity(intent);
     }
 
 }

@@ -20,6 +20,8 @@ public class StopViewRow extends RelativeLayout {
     private TextView mDistance;
     public CapStop stop;
 
+    public CapStop stop;
+
     public StopViewRow(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
