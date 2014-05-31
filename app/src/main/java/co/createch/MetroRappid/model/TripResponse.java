@@ -1,6 +1,6 @@
 package co.createch.MetroRappid.model;
 
-public class TripResponse
+public class    TripResponse
 {
 
 }

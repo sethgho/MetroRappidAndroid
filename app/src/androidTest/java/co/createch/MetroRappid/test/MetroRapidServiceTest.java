@@ -6,6 +6,7 @@ import junit.framework.TestCase;
 
 import java.util.concurrent.CountDownLatch;
 
+import co.createch.MetroRappid.model.ResponseEnvelope;
 import co.createch.MetroRappid.model.StopResponse;
 import co.createch.MetroRappid.service.MetroRapidService;
 import retrofit.Callback;
@@ -17,8 +18,6 @@ import retrofit.client.Response;
  * Created by Seth Gholson on 5/31/14.
  */
 public class MetroRapidServiceTest extends TestCase {
-    final CountDownLatch signal = new CountDownLatch(1);
-
     @Override
     protected void setUp() throws Exception {
         super.setUp();
@@ -32,25 +31,22 @@ public class MetroRapidServiceTest extends TestCase {
 
         MetroRapidService service = restAdapter.create(MetroRapidService.class);
 
-        Callback<StopResponse> cb = new Callback<StopResponse>() {
+        Callback<ResponseEnvelope> cb = new Callback<ResponseEnvelope>() {
             @Override
-            public void success(StopResponse stopResponse, Response response) {
+            public void success(ResponseEnvelope resEnv, Response response) {
                 signal.countDown();// notify the count down latch
                 Log.d("TEST", "Success");
+                Log.d("TEST", "POOP");
             }
 
             @Override
-            public void failure(RetrofitError error) {
+            public void failure(RetrofitError error) {`
 
                 signal.countDown();// notify the count down latch
                 Log.d("TEST", "Fail!");
+                Log.d("TEST", "POOP");
             }
         };
-        service.getRealtimeInfo("801","5867",cb);
-        try {
-            signal.await();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        service.getRealtimeInfo("801", "5867", "xml", 2, "NB", cb);
     }
 }
