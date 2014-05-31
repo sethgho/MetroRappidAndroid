@@ -31,19 +31,19 @@ public class StopListAdapterTest extends InstrumentationTestCase {
         mStops.add(stop1);
         mStops.add(stop2);
 
-        mAdapter = new StopListAdapter(getInstrumentation().getTargetContext(), mStops);
+//        mAdapter = new StopListAdapter(getInstrumentation().getTargetContext(), mStops);
     }
 
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
     }
-
-    public void testAdapter() {
-        int count = mAdapter.getCount();
-        assertEquals(2,count);
-
-        CapStop firstStop = mAdapter.getItem(0);
-        assertEquals("stopid1", firstStop.stopId);
-    }
+//
+//    public void testAdapter() {
+//        int count = mAdapter.getCount();
+//        assertEquals(2,count);
+//
+//        CapStop firstStop = mAdapter.getItem(0);
+//        assertEquals("stopid1", firstStop.stopId);
+//    }
 }
