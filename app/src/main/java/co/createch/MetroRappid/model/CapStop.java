@@ -1,13 +1,15 @@
 package co.createch.MetroRappid.model;
 
 import android.location.Location;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by Seth Gholson on 4/20/14.
  */
-public class CapStop implements Comparable { //extend Maps marker?
+public class CapStop implements Comparable, Parcelable { //extend Maps marker?
     @SerializedName("route_id")
     public String routeId;
 
@@ -70,4 +72,54 @@ public class CapStop implements Comparable { //extend Maps marker?
     public boolean knowsDistance() {
         return isDistanceKnown;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.routeId);
+        dest.writeString(this.stopId);
+        dest.writeString(this.tripId);
+        dest.writeDouble(this.latitude);
+        dest.writeDouble(this.longitude);
+        dest.writeString(this.name);
+        dest.writeString(this.description);
+        dest.writeInt(this.stopSequence);
+        dest.writeInt(this.direction == null ? -1 : this.direction.ordinal());
+        dest.writeString(this.headsign);
+        dest.writeFloat(this.distance);
+        dest.writeByte(isDistanceKnown ? (byte) 1 : (byte) 0);
+    }
+
+    public CapStop() {
+    }
+
+    private CapStop(Parcel in) {
+        this.routeId = in.readString();
+        this.stopId = in.readString();
+        this.tripId = in.readString();
+        this.latitude = in.readDouble();
+        this.longitude = in.readDouble();
+        this.name = in.readString();
+        this.description = in.readString();
+        this.stopSequence = in.readInt();
+        int tmpDirection = in.readInt();
+        this.direction = tmpDirection == -1 ? null : RouteDirection.values()[tmpDirection];
+        this.headsign = in.readString();
+        this.distance = in.readFloat();
+        this.isDistanceKnown = in.readByte() != 0;
+    }
+
+    public static Parcelable.Creator<CapStop> CREATOR = new Parcelable.Creator<CapStop>() {
+        public CapStop createFromParcel(Parcel source) {
+            return new CapStop(source);
+        }
+
+        public CapStop[] newArray(int size) {
+            return new CapStop[size];
+        }
+    };
 }

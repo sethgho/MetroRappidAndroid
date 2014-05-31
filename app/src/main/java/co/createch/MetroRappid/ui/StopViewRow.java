@@ -18,6 +18,7 @@ public class StopViewRow extends RelativeLayout {
     private TextView mStopName;
     private TextView mBusTimes;
     private TextView mDistance;
+    public CapStop stop;
 
     public StopViewRow(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -36,6 +37,7 @@ public class StopViewRow extends RelativeLayout {
     }
 
     public void loadStop(CapStop stop){
+        this.stop = stop;
         mStopName.setText(stop.name);
         mBusTimes.setText("5m 22m 31m");
         mDistance.setText(String.format("%d m", (int)stop.distance));

@@ -1,8 +1,10 @@
 package co.createch.MetroRappid.ui;
 
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -13,13 +15,14 @@ import butterknife.InjectView;
 import co.createch.MetroRappid.R;
 import co.createch.MetroRappid.data.FileStopRepository;
 import co.createch.MetroRappid.data.StopRepository;
+import co.createch.MetroRappid.model.CapStop;
 import co.createch.MetroRappid.model.CapStopCollection;
 import co.createch.MetroRappid.model.RouteDirection;
 
 /**
  * Created by Seth Gholson on 5/2/14.
  */
-public class StopListActivity extends BaseLocationActivity {
+public class StopListActivity extends BaseLocationActivity implements AdapterView.OnItemClickListener {
 
     @InjectView(R.id.list)
     public ListView mList;
@@ -39,11 +42,17 @@ public class StopListActivity extends BaseLocationActivity {
         ButterKnife.inject(this);
         initializeAdapter();
         showLoading(R.string.getting_location);
+        attachListeners();
         if(servicesConnected())
         {
             mLocationClient.connect();
         }
     }
+
+    private void attachListeners() {
+        mList.setOnItemClickListener(this);
+    }
+
 
     @Override
     public void onConnected(Bundle dataBundle) {
@@ -73,4 +82,15 @@ public class StopListActivity extends BaseLocationActivity {
         super.onConnectionFailed(connectionResult);
         hideLoading();
     }
+
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        StopViewRow row = (StopViewRow) view;
+        Intent i = new Intent(this, RouteViewActivity.class);
+        CapStop stop = row.stop;
+        i.putExtra(RouteViewActivity.CAP_STOP, stop);
+        startActivity(i);
+
+    }
+
 }
