@@ -13,6 +13,7 @@ import com.google.android.gms.common.ConnectionResult;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import co.createch.MetroRappid.MetroRapidApp;
 import co.createch.MetroRappid.R;
 import co.createch.MetroRappid.data.FileStopRepository;
 import co.createch.MetroRappid.data.StopRepository;
@@ -20,10 +21,7 @@ import co.createch.MetroRappid.model.CapStop;
 import co.createch.MetroRappid.model.CapStopCollection;
 import co.createch.MetroRappid.model.ResponseEnvelope;
 import co.createch.MetroRappid.model.RouteDirection;
-import co.createch.MetroRappid.service.MetroRapidService;
-import co.createch.MetroRappid.service.converter.SimpleXMLConverter;
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
@@ -72,18 +70,12 @@ public class StopListActivity extends BaseLocationActivity implements AdapterVie
     }
 
     private void testGetRealtimeData() {
-        RestAdapter adapter = new RestAdapter.Builder().setEndpoint("http://www.capmetro.org")
-                .setConverter(new SimpleXMLConverter())
-                .build();
-
-        MetroRapidService service = adapter.create(MetroRapidService.class);
-        service.getRealtimeInfo("801", "5867", "xml", 2, "NB", new Callback<ResponseEnvelope>() {
+        ((MetroRapidApp)getApplication()).getCapMetroService().getRealtimeInfo("801", "5867", "xml", 2, "NB", new Callback<ResponseEnvelope>() {
             @Override
             public void success(ResponseEnvelope stopResponse, Response response) {
                 Log.d("TEST", "Success!'");
                 Log.d("stopResponse", stopResponse.toString());
                 Log.d("Response", response.toString());
-                ;
             }
 
             @Override
