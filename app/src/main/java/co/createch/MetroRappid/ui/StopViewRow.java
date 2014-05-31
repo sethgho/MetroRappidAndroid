@@ -18,7 +18,6 @@ public class StopViewRow extends RelativeLayout {
     private TextView mStopName;
     private TextView mBusTimes;
     private TextView mDistance;
-    public CapStop stop;
 
     public CapStop stop;
 
