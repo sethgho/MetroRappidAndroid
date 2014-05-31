@@ -75,7 +75,7 @@ public class StopListActivity extends BaseLocationActivity implements AdapterVie
             public void success(ResponseEnvelope stopResponse, Response response) {
                 Log.d("TEST", "Success!'");
                 Log.d("stopResponse", stopResponse.toString());
-                Log.d("Response", response.toString());
+//                Log.d("Response", stopResponse.body.response.stop.service.list.toString());
             }
 
             @Override

@@ -14,5 +14,4 @@ public class NextBusResponse
 
     @Element(name="Atstop")
     public StopResponse stop;
-
 }
