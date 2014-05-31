@@ -123,3 +123,4 @@ public class CapStop implements Comparable, Parcelable { //extend Maps marker?
         }
     };
 }
+
