@@ -46,11 +46,11 @@ public class MetroRapidServiceTest extends TestCase {
                 Log.d("TEST", "Fail!");
             }
         };
-        service.getRealtimeInfo("801","5867",cb);
-        try {
-            signal.await();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        service.getRealtimeInfo("801","5867",cb);
+//        try {
+//            signal.await();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 }

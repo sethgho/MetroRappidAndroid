@@ -19,7 +19,4 @@ public class RouteShape {
     @SerializedName("shape_pt_sequence")
     public int sequence;
 
-    @SerializedName("shape_dist_traveled")
-    public double distanceTraveled;
-
 }

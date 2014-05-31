@@ -20,4 +20,9 @@ public enum RouteDirection {
         }
         return null;
     }
+
+    public int getKey()
+    {
+        return key;
+    }
 }
