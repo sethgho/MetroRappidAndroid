@@ -116,6 +116,9 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
         }
         if(nearestMarker != null) {
             nearestMarker.showInfoWindow();
+            if (mStopClickListener != null) {
+                mStopClickListener.onStopClicked(nearestStop.stopId);
+            }
         }
     }
 
