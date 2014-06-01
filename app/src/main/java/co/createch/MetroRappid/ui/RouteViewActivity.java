@@ -3,6 +3,7 @@ package co.createch.MetroRappid.ui;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.Toast;
 
 import java.util.List;
@@ -21,7 +22,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class RouteViewActivity extends BaseLocationActivity {
+public class RouteViewActivity extends BaseLocationActivity implements RouteMapFragment.OnStopClickListener {
 
     public final static String TAG = RouteViewActivity.class.getName();
 
@@ -34,6 +35,7 @@ public class RouteViewActivity extends BaseLocationActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_route_view);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -59,6 +61,7 @@ public class RouteViewActivity extends BaseLocationActivity {
 
     private void loadRealtimeInfo(String stopId) {
         MetroRapidService service = MetroRapidApp.from(this).getCapMetroService();
+        setProgressBarIndeterminateVisibility(true);
         service.getRealtimeInfo(mRouteId, stopId, "xml", "X", "NB", new Callback<ResponseEnvelope>() {
             @Override
             public void success(ResponseEnvelope responseEnvelope, Response response) {
@@ -69,11 +72,13 @@ public class RouteViewActivity extends BaseLocationActivity {
                     List<TripInfo> trips = responseEnvelope.body.response.stop.service.trips;
                     mMapFragment.loadTrips(trips);
                 }
+                setProgressBarIndeterminateVisibility(false);
             }
 
             @Override
             public void failure(RetrofitError error) {
                 Toast.makeText(getApplicationContext(), String.format("Error: %s", error.getMessage()), Toast.LENGTH_LONG).show();
+                setProgressBarIndeterminateVisibility(false);
             }
         });
     }
@@ -91,6 +96,7 @@ public class RouteViewActivity extends BaseLocationActivity {
     protected void onResumeFragments() {
         super.onResumeFragments();
         mMapFragment = (RouteMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
+        mMapFragment.setOnStopClickListener(this);
         loadRoute();
     }
 
@@ -120,4 +126,8 @@ public class RouteViewActivity extends BaseLocationActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onStopClicked(String stopId) {
+        loadRealtimeInfo(stopId);
+    }
 }

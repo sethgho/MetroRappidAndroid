@@ -4,6 +4,8 @@ import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -122,5 +124,14 @@ public class CapStop implements Comparable, Parcelable { //extend Maps marker?
             return new CapStop[size];
         }
     };
+
+    public MarkerOptions getMarker() {
+        MarkerOptions option = new MarkerOptions()
+                .position(new LatLng(latitude,longitude))
+                .draggable(false)
+                .title(name)
+                .snippet(description);
+        return option;
+    }
 }
 

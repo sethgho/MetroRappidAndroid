@@ -8,10 +8,13 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import co.createch.MetroRappid.model.CapStop;
 import co.createch.MetroRappid.model.CapStopCollection;
@@ -21,10 +24,12 @@ import co.createch.MetroRappid.model.TripInfo;
 /**
  * Created by sean on 5/31/14.
  */
-public class RouteMapFragment extends SupportMapFragment implements GoogleMap.OnMapLoadedCallback {
+public class RouteMapFragment extends SupportMapFragment implements GoogleMap.OnMapLoadedCallback, GoogleMap.OnMarkerClickListener {
     private Location mCurrentLocation;
     private RoutePath mCurrentPath;
     private CapStopCollection mCurrentStops;
+    private Map<Marker, String> mStopMarkerCache;
+    private OnStopClickListener mStopClickListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,6 +40,7 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         getMap().setOnMapLoadedCallback(this);
+        getMap().setOnMarkerClickListener(this);
     }
 
     public void setRoutePath(RoutePath path) {
@@ -45,8 +51,11 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
     public void setStops(CapStopCollection stops) {
         mCurrentStops = stops;
         final GoogleMap map = getMap();
-        for (MarkerOptions m : stops.getMarkers()) {
-            map.addMarker(m);
+        mStopMarkerCache = new HashMap<Marker, String>();
+        Map<MarkerOptions,String> markerOptions = stops.getMarkerHashMap();
+        for (MarkerOptions mo : markerOptions.keySet()) {
+            Marker m = map.addMarker(mo);
+            mStopMarkerCache.put(m, markerOptions.get(mo));
         }
     }
 
@@ -103,5 +112,30 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
         LatLngBounds latLngBox = new LatLngBounds(southWest, northEast);
         getMap().moveCamera(CameraUpdateFactory.newLatLngBounds(
             latLngBox, 250, 250, 30));
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        if(mStopClickListener == null)
+        {
+            return false;
+        }
+
+        String stopId = mStopMarkerCache.get(marker);
+        if(stopId != null)
+        {
+            mStopClickListener.onStopClicked(stopId);
+        }
+        return false;
+    }
+
+    public void setOnStopClickListener(OnStopClickListener listener)
+    {
+        mStopClickListener = listener;
+    }
+
+    public interface OnStopClickListener
+    {
+        public void onStopClicked(String stopId);
     }
 }

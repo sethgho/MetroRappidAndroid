@@ -5,11 +5,13 @@ import android.location.Location;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import co.createch.MetroRappidAndroid.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+
+import co.createch.MetroRappidAndroid.R;
 
 /**
  * Created by Seth Gholson on 5/3/14.
@@ -23,10 +25,20 @@ public class CapStopCollection extends ArrayList<CapStop> {
         }
         Collections.sort(this);
     }
+//
+//    public List<MarkerOptions> getMarkers()
+//    {
+//        ArrayList<MarkerOptions> results = new ArrayList<MarkerOptions>();
+//        for(CapStop s : this)
+//        {
+//            results.add(s.getMarker());
+//        }
+//        return results;
+//    }
 
-    public List<MarkerOptions> getMarkers()
+    public Map<MarkerOptions,String> getMarkerHashMap()
     {
-        ArrayList<MarkerOptions> results = new ArrayList<MarkerOptions>();
+        Map<MarkerOptions, String> results = new HashMap<MarkerOptions, String>();
         for(CapStop s : this)
         {
             MarkerOptions option = new MarkerOptions()
@@ -37,7 +49,7 @@ public class CapStopCollection extends ArrayList<CapStop> {
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.stop_red))
                     .anchor(0.5f, 0.5f);
 
-            results.add(option);
+            results.put(option, s.stopId);
         }
         return results;
     }
