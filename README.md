@@ -44,11 +44,11 @@ So, lets answer the same question using the MetroRappid app we built this weeken
 
 # The Team
 
-@sethgho
-@luqmaan
-@scasketta
-@johntyree
-@caskman
+https://github.com/sethgho
+https://github.com/luqmaan
+https://github.com/scasketta
+https://github.com/johntyree
+https://github.com/caskman
 
 
 # Get MetroRappid for Android
