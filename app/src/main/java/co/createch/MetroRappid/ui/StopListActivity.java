@@ -94,12 +94,12 @@ public class StopListActivity extends BaseLocationActivity implements AdapterVie
         hideLoading();
     }
 
+
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         StopViewRow row = (StopViewRow) view;
         Intent intent = new Intent(adapterView.getContext(),RouteViewActivity.class);
         intent.putExtra(RouteViewActivity.ARG_ROUTE_ID, "801");
-        intent.putExtra(RouteViewActivity.CAP_STOP, row.stop);
         startActivity(intent);
     }
 

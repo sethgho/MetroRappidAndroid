@@ -1,20 +1,14 @@
 package co.createch.MetroRappid.ui;
 
-import android.location.Location;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import co.createch.MetroRappid.MetroRapidApp;
 import co.createch.MetroRappid.data.RouteRepository;
 import co.createch.MetroRappid.data.StopRepository;
-import co.createch.MetroRappid.model.CapStop;
 import co.createch.MetroRappid.model.CapStopCollection;
 import co.createch.MetroRappid.model.RouteDirection;
 import co.createch.MetroRappid.model.RoutePath;
@@ -28,13 +22,8 @@ public class RouteViewActivity extends BaseLocationActivity {
     public static final String ARG_ROUTE_ID = "ROUTE_ID";
     public static final String ARG_ROUTE_NAME = "ROUTE_NAME";
 
-    public CapStop stop;
-    public Location location;
-    public GoogleMap map;
-    private boolean isConnected = false;
     private String mRouteId;
-
-    public final static String CAP_STOP = "CAP_STOP";
+    private RouteMapFragment mMapFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +48,7 @@ public class RouteViewActivity extends BaseLocationActivity {
     private void loadStops() {
         final StopRepository repo = MetroRapidApp.from(this).getStopRepository();
         final CapStopCollection stops = repo.getStopsForRoute(mRouteId, RouteDirection.North);
-        for (MarkerOptions m : stops.getMarkers()) {
-            map.addMarker(m);
-        }
+        mMapFragment.setStopMarkers(stops.getMarkers());
     }
 
     private void loadRealtimeInfo(String stopId) {
@@ -71,45 +58,25 @@ public class RouteViewActivity extends BaseLocationActivity {
 
     private void loadPath(RoutePath path) {
         PolylineOptions options = path.getPolyLineOptions();
-        options.color(0xFF000000);
-        map.addPolyline(options);
-    }
-
-    public void setMap(GoogleMap map) {
-        this.map = map;
-        if (isConnected) initMap();
-    }
-
-    private void initMap() {
-        location = mLocationClient.getLastLocation();
-        if (location != null) {
-            map.setMyLocationEnabled(true);
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13));
-        }
+        options.color(R.color.route_fill);
+        mMapFragment.setRoutePath(options);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        loadRoute();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mLocationClient.disconnect();
     }
 
     @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
+        mMapFragment = (RouteMapFragment)getSupportFragmentManager().findFragmentById(R.id.mapFragment);
+        loadRoute();
     }
 
     @Override
     public void onConnected(Bundle dataBundle) {
-        // Display the connection status
-        isConnected = true;
-        if (map != null) initMap();
+        mMapFragment.setLocation(mLocationClient.getLastLocation());
     }
 
     @Override
