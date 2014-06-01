@@ -82,8 +82,10 @@ public class RouteViewActivity extends BaseLocationActivity {
 
     private void initMap() {
         location = mLocationClient.getLastLocation();
-        map.setMyLocationEnabled(true);
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13));
+        if(location != null) {
+            map.setMyLocationEnabled(true);
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13));
+        }
     }
 
     @Override

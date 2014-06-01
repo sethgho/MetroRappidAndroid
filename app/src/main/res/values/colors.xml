@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="route_fill">16163F</color>
-    <color name="route_border">DDDDE8</color>
-    <color name="route_shadow">2C2C2E</color>
+    <color name="route_fill">#16163F</color>
+    <color name="route_border">#DDDDE8</color>
+    <color name="route_shadow">#2C2C2E</color>
 </resources>
