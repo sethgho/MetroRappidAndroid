@@ -121,7 +121,7 @@ public class RouteViewActivity extends BaseLocationActivity implements RouteMapF
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.route_view, menu);
         MenuItem direction = menu.findItem(R.id.action_direction);
-        direction.setTitle(mRouteDirection == RouteDirection.North ? "N" : "S");
+        direction.setTitle(mRouteDirection == RouteDirection.North ? "North" : "South");
         return true;
     }
 
