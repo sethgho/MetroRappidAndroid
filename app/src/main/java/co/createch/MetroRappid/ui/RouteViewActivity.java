@@ -11,10 +11,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-import co.createch.MetroRappid.data.FileStopRepository;
+import co.createch.MetroRappid.MetroRapidApp;
+import co.createch.MetroRappid.data.RouteRepository;
+import co.createch.MetroRappid.data.StopRepository;
 import co.createch.MetroRappid.model.CapStop;
 import co.createch.MetroRappid.model.CapStopCollection;
-import co.createch.MetroRappid.model.FileRouteRepository;
 import co.createch.MetroRappid.model.RouteDirection;
 import co.createch.MetroRappid.model.RoutePath;
 import co.createch.MetroRappidAndroid.R;
@@ -45,15 +46,15 @@ public class RouteViewActivity extends BaseLocationActivity {
     }
 
     private void loadRoute() {
-        FileRouteRepository repo = new FileRouteRepository(getApplicationContext());
-        RoutePath path = repo.getShapesForRoute(mRouteId, RouteDirection.North);
+        final RouteRepository repo = MetroRapidApp.from(this).getRouteRepository();
+        final RoutePath path = repo.getShapesForRoute(mRouteId, RouteDirection.North);
         loadPath(path);
         loadStops();
     }
 
     private void loadStops() {
-        FileStopRepository repo = new FileStopRepository(getApplicationContext());
-        CapStopCollection stops = repo.getStopsForRoute(mRouteId,RouteDirection.North);
+        final StopRepository repo = MetroRapidApp.from(this).getStopRepository();
+        final CapStopCollection stops = repo.getStopsForRoute(mRouteId,RouteDirection.North);
         for(MarkerOptions m : stops.getMarkers())
         {
             map.addMarker(m);
