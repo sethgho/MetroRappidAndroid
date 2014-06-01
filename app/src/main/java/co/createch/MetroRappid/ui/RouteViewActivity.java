@@ -2,7 +2,6 @@ package co.createch.MetroRappid.ui;
 
 import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -19,6 +18,7 @@ import co.createch.MetroRappid.model.CapStop;
 import co.createch.MetroRappid.model.CapStopCollection;
 import co.createch.MetroRappid.model.RouteDirection;
 import co.createch.MetroRappid.model.RoutePath;
+import co.createch.MetroRappid.service.MetroRapidService;
 import co.createch.MetroRappidAndroid.R;
 
 public class RouteViewActivity extends BaseLocationActivity {
@@ -60,6 +60,12 @@ public class RouteViewActivity extends BaseLocationActivity {
         {
             map.addMarker(m);
         }
+    }
+
+    private void loadRealtimeInfo(String stopId)
+    {
+        MetroRapidService service = MetroRapidApp.from(this).getCapMetroService();
+        //TODO:
     }
 
     private void loadPath(RoutePath path) {

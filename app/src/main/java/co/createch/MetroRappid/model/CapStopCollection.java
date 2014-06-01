@@ -31,7 +31,8 @@ public class CapStopCollection extends ArrayList<CapStop> {
                     .position(new LatLng(s.latitude,s.longitude))
                     .draggable(false)
                     .title(s.name)
-                    .snippet(s.description);
+                    .snippet(s.description)
+
             results.add(option);
         }
         return results;
