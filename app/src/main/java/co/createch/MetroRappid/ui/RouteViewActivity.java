@@ -3,15 +3,23 @@ package co.createch.MetroRappid.ui;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import java.util.List;
 
 import co.createch.MetroRappid.MetroRapidApp;
 import co.createch.MetroRappid.data.RouteRepository;
 import co.createch.MetroRappid.data.StopRepository;
 import co.createch.MetroRappid.model.CapStopCollection;
+import co.createch.MetroRappid.model.ResponseEnvelope;
 import co.createch.MetroRappid.model.RouteDirection;
 import co.createch.MetroRappid.model.RoutePath;
+import co.createch.MetroRappid.model.TripInfo;
 import co.createch.MetroRappid.service.MetroRapidService;
 import co.createch.MetroRappidAndroid.R;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class RouteViewActivity extends BaseLocationActivity {
 
@@ -51,7 +59,23 @@ public class RouteViewActivity extends BaseLocationActivity {
 
     private void loadRealtimeInfo(String stopId) {
         MetroRapidService service = MetroRapidApp.from(this).getCapMetroService();
-        //TODO:
+        service.getRealtimeInfo(mRouteId, stopId, "xml", "X", "NB", new Callback<ResponseEnvelope>() {
+            @Override
+            public void success(ResponseEnvelope responseEnvelope, Response response) {
+                if(responseEnvelope != null &&
+                        responseEnvelope.body != null &&
+                        responseEnvelope.body.response != null)
+                {
+                    List<TripInfo> trips = responseEnvelope.body.response.stop.service.trips;
+                    mMapFragment.loadTrips(trips);
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Toast.makeText(getApplicationContext(), String.format("Error: %s", error.getMessage()), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void loadPath(RoutePath path) {
@@ -66,7 +90,7 @@ public class RouteViewActivity extends BaseLocationActivity {
     @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
-        mMapFragment = (RouteMapFragment)getSupportFragmentManager().findFragmentById(R.id.mapFragment);
+        mMapFragment = (RouteMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
         loadRoute();
     }
 
@@ -88,6 +112,7 @@ public class RouteViewActivity extends BaseLocationActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        loadRealtimeInfo("5867");
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;

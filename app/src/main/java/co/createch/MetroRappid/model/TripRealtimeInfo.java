@@ -9,10 +9,10 @@ public class TripRealtimeInfo
     @Element(name="Estimatedtime")
     public String estimatedTime;
 
-    @Element(name="Polltime")
+    @Element(name="Polltime", required = false)
     public String pollTime;
 
-    @Element(name="Vehicleid")
+    @Element(name="Vehicleid", required = false)
     public String vehicleId;
 
     @Element(name="Lat")

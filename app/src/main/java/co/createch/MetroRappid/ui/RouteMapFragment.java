@@ -10,9 +10,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Collection;
+import java.util.List;
 
 import co.createch.MetroRappid.model.CapStopCollection;
 import co.createch.MetroRappid.model.RoutePath;
+import co.createch.MetroRappid.model.TripInfo;
 
 /**
  * Created by sean on 5/31/14.
@@ -67,5 +69,10 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
 
     }
 
-
+    public void loadTrips(List<TripInfo> trips) {
+        for(TripInfo t : trips)
+        {
+            getMap().addMarker(t.getBusMarker());
+        }
+    }
 }
