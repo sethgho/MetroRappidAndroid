@@ -1,18 +1,12 @@
 package co.createch.MetroRappid.ui;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.location.Location;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
-import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
 import co.createch.MetroRappid.model.CapStop;
@@ -33,10 +27,6 @@ public class RouteViewActivity extends BaseLocationActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_route_view);
-
-
-
-
     }
 
     public void setMap(GoogleMap map) {
@@ -67,7 +57,7 @@ public class RouteViewActivity extends BaseLocationActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.route_view, menu);
         return true;
