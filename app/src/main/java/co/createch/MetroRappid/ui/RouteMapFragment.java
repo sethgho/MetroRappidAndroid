@@ -43,12 +43,28 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
         getMap().setOnMarkerClickListener(this);
     }
 
-    public void setRoutePath(RoutePath path) {
+    public void loadRouteData(RoutePath path, CapStopCollection stops)
+    {
+        clear();
+        setRoutePath(path);
+        setStops(stops);
+        mapZoomToShowNearestStop();
+    }
+
+    private void setRoutePath(RoutePath path) {
+        if(path == null)
+        {
+            return;
+        }
         mCurrentPath = path;
         getMap().addPolyline(path.getPolyLineOptions());
     }
 
-    public void setStops(CapStopCollection stops) {
+    private void setStops(CapStopCollection stops) {
+        if(stops == null)
+        {
+            return;
+        }
         mCurrentStops = stops;
         final GoogleMap map = getMap();
         mStopMarkerCache = new HashMap<Marker, String>();
@@ -75,6 +91,11 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
         }
     }
 
+    public void clear()
+    {
+        getMap().clear();
+    }
+
     @Override
     public void onMapLoaded() {
     }
@@ -87,6 +108,10 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
     }
 
     private void mapZoomToShowNearestStop() {
+        if(mCurrentLocation == null)
+        {
+            return;
+        }
         mCurrentStops.setLocation(mCurrentLocation);
         CapStop stop = mCurrentStops.get(0);
         double lat0, lon0, lat1, lon1;

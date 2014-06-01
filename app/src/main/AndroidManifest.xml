@@ -17,18 +17,13 @@
         android:name="co.createch.MetroRappid.MetroRapidApp"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <activity android:name="co.createch.MetroRappid.ui.RouteListActivity" >
+        <activity android:name="co.createch.MetroRappid.ui.RouteViewActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name="co.createch.MetroRappid.ui.RouteViewActivity"
-            android:label="@string/title_activity_route_view" >
         </activity>
 
         <meta-data

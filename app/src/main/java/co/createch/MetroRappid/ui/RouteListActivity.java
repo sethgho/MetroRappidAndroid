@@ -54,7 +54,6 @@ public class RouteListActivity extends FragmentActivity implements AdapterView.O
         }
         Intent i = new Intent(this,RouteViewActivity.class);
         i.putExtra(RouteViewActivity.ARG_ROUTE_ID, routeId);
-        i.putExtra(RouteViewActivity.ARG_ROUTE_NAME,mValues[position]);
         startActivity(i);
     }
 }

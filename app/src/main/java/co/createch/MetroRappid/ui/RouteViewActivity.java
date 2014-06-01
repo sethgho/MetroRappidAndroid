@@ -1,9 +1,13 @@
 package co.createch.MetroRappid.ui;
 
+import android.annotation.TargetApi;
+import android.app.ActionBar;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import java.util.List;
@@ -22,12 +26,12 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class RouteViewActivity extends BaseLocationActivity implements RouteMapFragment.OnStopClickListener {
+public class RouteViewActivity extends BaseLocationActivity implements RouteMapFragment.OnStopClickListener, ActionBar.OnNavigationListener {
 
     public final static String TAG = RouteViewActivity.class.getName();
 
     public static final String ARG_ROUTE_ID = "ROUTE_ID";
-    public static final String ARG_ROUTE_NAME = "ROUTE_NAME";
+    private String[] mRouteValues;
 
     private String mRouteId;
     private RouteMapFragment mMapFragment;
@@ -38,25 +42,32 @@ public class RouteViewActivity extends BaseLocationActivity implements RouteMapF
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_route_view);
         Bundle extras = getIntent().getExtras();
+        getActionBar().setDisplayShowTitleEnabled(false);
         if (extras != null) {
             mRouteId = extras.getString(ARG_ROUTE_ID);
-            final String title = extras.getString(ARG_ROUTE_NAME);
-            this.setTitle(title);
         }
+        mRouteId = "801";
+        setupActionBar();
+    }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    private void setupActionBar() {
+        mRouteValues = getResources().getStringArray(R.array.routes_array);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1,
+                mRouteValues);
+
+        getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+        getActionBar().setListNavigationCallbacks(adapter, this);
     }
 
     private void loadRoute() {
-        final RouteRepository repo = MetroRapidApp.from(this).getRouteRepository();
-        final RoutePath path = repo.getShapesForRoute(mRouteId, RouteDirection.North);
-        loadPath(path);
-        loadStops();
-    }
+        final RouteRepository pathRepo = MetroRapidApp.from(this).getRouteRepository();
+        final StopRepository stopRepo = MetroRapidApp.from(this).getStopRepository();
 
-    private void loadStops() {
-        final StopRepository repo = MetroRapidApp.from(this).getStopRepository();
-        final CapStopCollection stops = repo.getStopsForRoute(mRouteId, RouteDirection.North);
-        mMapFragment.setStops(stops);
+        final RoutePath path = pathRepo.getShapesForRoute(mRouteId, RouteDirection.North);
+        final CapStopCollection stops = stopRepo.getStopsForRoute(mRouteId, RouteDirection.North);
+        mMapFragment.loadRouteData(path, stops);
     }
 
     private void loadRealtimeInfo(String stopId) {
@@ -65,10 +76,9 @@ public class RouteViewActivity extends BaseLocationActivity implements RouteMapF
         service.getRealtimeInfo(mRouteId, stopId, "xml", "X", "NB", new Callback<ResponseEnvelope>() {
             @Override
             public void success(ResponseEnvelope responseEnvelope, Response response) {
-                if(responseEnvelope != null &&
+                if (responseEnvelope != null &&
                         responseEnvelope.body != null &&
-                        responseEnvelope.body.response != null)
-                {
+                        responseEnvelope.body.response != null) {
                     List<TripInfo> trips = responseEnvelope.body.response.stop.service.trips;
                     mMapFragment.loadTrips(trips);
                 }
@@ -81,10 +91,6 @@ public class RouteViewActivity extends BaseLocationActivity implements RouteMapF
                 setProgressBarIndeterminateVisibility(false);
             }
         });
-    }
-
-    private void loadPath(RoutePath path) {
-        mMapFragment.setRoutePath(path);
     }
 
     @Override
@@ -129,5 +135,19 @@ public class RouteViewActivity extends BaseLocationActivity implements RouteMapF
     @Override
     public void onStopClicked(String stopId) {
         loadRealtimeInfo(stopId);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+        switch (itemPosition) {
+            case 0:
+                mRouteId = "801";
+                break;
+            default:
+                mRouteId = "550";
+                break;
+        }
+        loadRoute();
+        return true;
     }
 }
