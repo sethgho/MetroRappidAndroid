@@ -24,9 +24,18 @@ Build an Android app that shows realtime arrivals for MetroRapid and MetroRail, 
 
 ## Our solution
 
-![Select a route and direction](https://cloud.githubusercontent.com/assets/1275831/3142686/33d32040-e9ce-11e3-8252-2f58ac6ecef4.jpg)
+Step 1. Select A Route
+And Direction
+
+(https://cloud.githubusercontent.com/assets/1275831/3142686/33d32040-e9ce-11e3-8252-2f58ac6ecef4.jpg)
+
+
+Step 2. 
+MetroRappid automatically finds the nearest stop and vehicle
 
 ![View the closest stop and vehicle](https://cloud.githubusercontent.com/assets/1275831/3142688/53a2b9d0-e9ce-11e3-923b-5e716dcacce1.jpg)
+
+Step 3. Get on the bus
 
 ## The Team
 
