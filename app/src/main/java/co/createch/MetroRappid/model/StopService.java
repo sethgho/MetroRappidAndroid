@@ -17,13 +17,15 @@ public class StopService {
     @Element(name = "Direction")
     public String direction;
 
-    @ElementList(inline=true, entry="Tripinfo")
+    @ElementList(inline = true, entry = "Tripinfo")
     public List<TripInfo> trips;
 
     public TripInfoCollection getTripInfoCollection() {
         TripInfoCollection result = new TripInfoCollection();
-        for (TripInfo p: trips) {
-            result.add(p);
+        for (TripInfo p : trips) {
+            if (p.realtimeInfo.latitude != 0 && p.realtimeInfo.longitude != 0) {
+                result.add(p);
+            }
         }
         return result;
     }
