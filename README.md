@@ -27,7 +27,7 @@ Build an Android app that shows realtime arrivals for MetroRapid and MetroRail, 
 Step 1. Select A Route
 And Direction
 
-(https://cloud.githubusercontent.com/assets/1275831/3142686/33d32040-e9ce-11e3-8252-2f58ac6ecef4.jpg)
+![Select A Route And Direction](https://cloud.githubusercontent.com/assets/1275831/3142686/33d32040-e9ce-11e3-8252-2f58ac6ecef4.jpg)
 
 
 Step 2. 
