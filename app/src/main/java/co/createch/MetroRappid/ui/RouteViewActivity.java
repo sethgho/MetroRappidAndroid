@@ -144,6 +144,7 @@ public class RouteViewActivity extends BaseLocationActivity implements RouteMapF
     @Override
     public void onStopClicked(String stopId) {
         loadRealtimeInfo(stopId);
+        mMapFragment.selectStop(stopId);
     }
 
     @Override
@@ -156,6 +157,7 @@ public class RouteViewActivity extends BaseLocationActivity implements RouteMapF
                 mRouteId = "550";
                 break;
         }
+        mMapFragment.selectStop("");
         loadRoute();
         return true;
     }

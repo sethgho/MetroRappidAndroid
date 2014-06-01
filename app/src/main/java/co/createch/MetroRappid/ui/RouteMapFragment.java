@@ -31,8 +31,19 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
     private Location mCurrentLocation;
     private RoutePath mCurrentPath;
     private CapStopCollection mCurrentStops;
+    private CapStop mSelectedStop;
     private Map<Marker, String> mStopMarkerCache;
     private OnStopClickListener mStopClickListener;
+
+    public void selectStop(String stopId) {
+        mSelectedStop = null;
+        for (CapStop m : mCurrentStops) {
+            if (stopId == m.stopId) {
+                mSelectedStop = m;
+                break;
+            }
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,7 +64,7 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
         mapZoomToShowNearestStop();
     }
 
-    private void setRoutePath(RoutePath path) {
+        private void setRoutePath(RoutePath path) {
         if (path == null) {
             return;
         }
@@ -87,10 +98,10 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
             mCurrentLocation = location;
             getMap().setMyLocationEnabled(true);
 
-            mCurrentStops.setLocation(location);
             double[] lats = new double[2];
             double[] lons = new double[2];
 
+            mCurrentStops.setLocation(location);
             lats[0] = mCurrentLocation.getLatitude();
             lats[1] = mCurrentStops.get(0).latitude;
 
@@ -118,7 +129,7 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
         mCurrentStops.setLocation(mCurrentLocation);
         trips.setLocation(mCurrentLocation);
 
-        CapStop nearStop = mCurrentStops.get(0);
+        CapStop nearStop = mSelectedStop == null ? mCurrentStops.get(0) : mSelectedStop;
         TripInfo nearTrip = trips.get(0);
 
         double[] lats = new double[3];
@@ -136,8 +147,12 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
 
     }
 
+    public void mapZoomToShowNearestStop() {
+        setLocation(mCurrentLocation);
+    }
+
     private void mapZoomToShowCoordinates(double[] latitudes, double[] longitudes,
-            boolean smartZoom) {
+            boolean animate) {
         double lat0 = 1e28;
         double lon0 = 1e28;
         double lat1 = -1e28;
@@ -157,12 +172,12 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
         LatLng northEast = new LatLng(lat1, lon1);
         LatLngBounds latLngBox = new LatLngBounds(southWest, northEast);
 
-        if (smartZoom) {
+        if (animate) {
             getMap().animateCamera(CameraUpdateFactory.newLatLngBounds(
                 latLngBox, 100));
         } else {
-            getMap().animateCamera(CameraUpdateFactory.newLatLngBounds(
-                latLngBox, 250, 250, 100));
+            getMap().moveCamera(CameraUpdateFactory.newLatLngBounds(
+                latLngBox, 100));
         }
    }
 
