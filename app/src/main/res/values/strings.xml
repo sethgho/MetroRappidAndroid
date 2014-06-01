@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">MetroRappid</string>
+    <string name="description">app for riding bus yes</string>
     <string name="hello_world">Hello world!</string>
     <string name="getting_location">Getting Location</string>
     <string name="title_activity_route_view">RouteViewActivity</string>
