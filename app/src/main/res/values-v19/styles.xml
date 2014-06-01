@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TranslucentTheme" parent="AppTheme">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:windowBackground">@color/common_signin_btn_dark_text_disabled</item>
+    </style>
+
+    <!--
+    look here for translucent status bars http://blog.gauntface.co.uk/2014/01/10/translucent-theme-in-android/
+    -->
+
+</resources>

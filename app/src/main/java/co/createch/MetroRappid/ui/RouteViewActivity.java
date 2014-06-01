@@ -44,6 +44,7 @@ public class RouteViewActivity extends BaseLocationActivity {
         {
             mRouteId = extras.getString(ARG_ROUTE_ID);
         }
+
     }
 
     private void loadRoute() {
