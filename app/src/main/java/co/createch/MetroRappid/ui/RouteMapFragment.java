@@ -46,24 +46,36 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
         getMap().setOnMarkerClickListener(this);
     }
 
-    public void setRoutePath(RoutePath path) {
+    public void loadRouteData(RoutePath path, CapStopCollection stops) {
+        clear();
+        setRoutePath(path);
+        setStops(stops);
+        mapZoomToShowNearestStop();
+    }
+
+    private void setRoutePath(RoutePath path) {
+        if (path == null) {
+            return;
+        }
         mCurrentPath = path;
         getMap().addPolyline(path.getPolyLineOptions());
     }
 
-    public void setStops(CapStopCollection stops) {
+    private void setStops(CapStopCollection stops) {
+        if (stops == null) {
+            return;
+        }
         mCurrentStops = stops;
         final GoogleMap map = getMap();
         mStopMarkerCache = new HashMap<Marker, String>();
-        Map<MarkerOptions,String> markerOptions = stops.getMarkerHashMap();
+        Map<MarkerOptions, String> markerOptions = stops.getMarkerHashMap();
         for (MarkerOptions mo : markerOptions.keySet()) {
             Marker m = map.addMarker(mo);
             mStopMarkerCache.put(m, markerOptions.get(mo));
         }
     }
 
-    public void setBusMarkers(Collection<MarkerOptions> markers)
-    {
+    public void setBusMarkers(Collection<MarkerOptions> markers) {
         final GoogleMap map = getMap();
         for (MarkerOptions m : markers) {
             map.addMarker(m);
@@ -87,6 +99,10 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
 
             mapZoomToShowCoordinates(lats, lons, false);
         }
+    }
+
+    public void clear() {
+        getMap().clear();
     }
 
     @Override
@@ -140,6 +156,7 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
         LatLng southWest = new LatLng(lat0, lon0);
         LatLng northEast = new LatLng(lat1, lon1);
         LatLngBounds latLngBox = new LatLngBounds(southWest, northEast);
+
         if (smartZoom) {
             getMap().animateCamera(CameraUpdateFactory.newLatLngBounds(
                 latLngBox, 100));
@@ -147,30 +164,26 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
             getMap().animateCamera(CameraUpdateFactory.newLatLngBounds(
                 latLngBox, 250, 250, 100));
         }
-    }
+   }
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        if(mStopClickListener == null)
-        {
+        if (mStopClickListener == null) {
             return false;
         }
 
         String stopId = mStopMarkerCache.get(marker);
-        if(stopId != null)
-        {
+        if (stopId != null) {
             mStopClickListener.onStopClicked(stopId);
         }
         return false;
     }
 
-    public void setOnStopClickListener(OnStopClickListener listener)
-    {
+    public void setOnStopClickListener(OnStopClickListener listener) {
         mStopClickListener = listener;
     }
 
-    public interface OnStopClickListener
-    {
+    public interface OnStopClickListener {
         public void onStopClicked(String stopId);
     }
 }
