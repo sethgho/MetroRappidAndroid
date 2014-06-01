@@ -2,8 +2,10 @@ package co.createch.MetroRappid.model;
 
 import android.location.Location;
 
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import co.createch.MetroRappidAndroid.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,7 +33,9 @@ public class CapStopCollection extends ArrayList<CapStop> {
                     .position(new LatLng(s.latitude,s.longitude))
                     .draggable(false)
                     .title(s.name)
-                    .snippet(s.description);
+                    .snippet(s.description)
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.stop_red))
+                    .anchor(0.5f, 0.5f);
 
             results.add(option);
         }
