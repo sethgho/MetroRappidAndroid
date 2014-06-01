@@ -7,10 +7,12 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Collection;
 
+import co.createch.MetroRappid.model.CapStop;
 import co.createch.MetroRappid.model.CapStopCollection;
 import co.createch.MetroRappid.model.RoutePath;
 
@@ -58,14 +60,40 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
         if (location != null) {
             mCurrentLocation = location;
             getMap().setMyLocationEnabled(true);
-            getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13));
+            mapZoomToShowNearestStop();
         }
     }
 
     @Override
     public void onMapLoaded() {
-
     }
 
+    private void mapZoomToShowNearestStop() {
+        mCurrentStops.setLocation(mCurrentLocation);
+        CapStop stop = mCurrentStops.get(0);
+        double lat0, lon0, lat1, lon1;
+
+        if (mCurrentLocation.getLatitude() < stop.latitude) {
+            lat0 = mCurrentLocation.getLatitude();
+            lat1 = stop.latitude;
+        } else {
+            lat0 = stop.latitude;
+            lat1 = mCurrentLocation.getLatitude();
+        }
+
+        if (mCurrentLocation.getLongitude() < stop.longitude) {
+            lon0 = mCurrentLocation.getLongitude();
+            lon1 = stop.longitude;
+        } else {
+            lon0 = stop.longitude;
+            lon1 = mCurrentLocation.getLongitude();
+        }
+
+        LatLng southWest = new LatLng(lat0, lon0);
+        LatLng northEast = new LatLng(lat1, lon1);
+        LatLngBounds latLngBox = new LatLngBounds(southWest, northEast);
+        getMap().moveCamera(CameraUpdateFactory.newLatLngBounds(
+            latLngBox, 250, 250, 30));
+    }
 
 }
