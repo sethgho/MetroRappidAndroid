@@ -14,12 +14,12 @@ On the Google Play store by the end of the week.
 - But, CapMetro's app is hard to use. See [CapMetroApp: When should I take the bus home?](https://github.com/sethgho/MetroRappidAndroid/wiki/CapMetro-App---When-should-I-take-the-bus-home)
 
 
-## What we did
+## What We Did
 
 Reverse engineer CapMetro's app and find their hidden API. [Document it](https://github.com/luqmaan/MetroRappid/wiki/The-CapMetro-API).
 Use that API to get the realtime data. Build an Android app that shows realtime arrivals for MetroRapid and MetroRail, really quickly.
 
-## Our solution
+## Solution
 
 Step 1. Select A Route
 And Direction
@@ -34,7 +34,7 @@ MetroRappid automatically finds the nearest stop and vehicle
 
 Step 3. Get on the bus
 
-## The Team
+## Team
 
 - https://github.com/sethgho
 - https://github.com/luqmaan
