@@ -33,7 +33,7 @@ And Direction
 Step 2. 
 MetroRappid automatically finds the nearest stop and vehicle
 
-![View the closest stop and vehicle](https://cloud.githubusercontent.com/assets/1275831/3142688/53a2b9d0-e9ce-11e3-923b-5e716dcacce1.jpg)
+![View the closest stop and vehicle](https://cloud.githubusercontent.com/assets/1275831/3142698/407f2950-e9cf-11e3-9d07-fe34c3519909.jpg)
 
 Step 3. Get on the bus
 
