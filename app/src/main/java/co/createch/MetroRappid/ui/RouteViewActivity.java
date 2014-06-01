@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.google.android.gms.maps.model.PolylineOptions;
-
 import co.createch.MetroRappid.MetroRapidApp;
 import co.createch.MetroRappid.data.RouteRepository;
 import co.createch.MetroRappid.data.StopRepository;
@@ -48,7 +46,7 @@ public class RouteViewActivity extends BaseLocationActivity {
     private void loadStops() {
         final StopRepository repo = MetroRapidApp.from(this).getStopRepository();
         final CapStopCollection stops = repo.getStopsForRoute(mRouteId, RouteDirection.North);
-        mMapFragment.setStopMarkers(stops.getMarkers());
+        mMapFragment.setStops(stops);
     }
 
     private void loadRealtimeInfo(String stopId) {
@@ -57,9 +55,7 @@ public class RouteViewActivity extends BaseLocationActivity {
     }
 
     private void loadPath(RoutePath path) {
-        PolylineOptions options = path.getPolyLineOptions();
-        options.color(R.color.route_fill);
-        mMapFragment.setRoutePath(options);
+        mMapFragment.setRoutePath(path);
     }
 
     @Override
