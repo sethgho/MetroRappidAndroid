@@ -18,6 +18,9 @@ public class TripRealtimeInfo
     @Element(name="Lat")
     public double latitude;
 
+    @Element(name="Stopped", required = false)
+    public String isStopped;
+
     @Element(name="Long")
     public double longitude;
 }
