@@ -40,8 +40,7 @@ public class RouteViewActivity extends BaseLocationActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_route_view);
         Bundle extras = getIntent().getExtras();
-        if(extras != null)
-        {
+        if (extras != null) {
             mRouteId = extras.getString(ARG_ROUTE_ID);
         }
 
@@ -56,15 +55,13 @@ public class RouteViewActivity extends BaseLocationActivity {
 
     private void loadStops() {
         final StopRepository repo = MetroRapidApp.from(this).getStopRepository();
-        final CapStopCollection stops = repo.getStopsForRoute(mRouteId,RouteDirection.North);
-        for(MarkerOptions m : stops.getMarkers())
-        {
+        final CapStopCollection stops = repo.getStopsForRoute(mRouteId, RouteDirection.North);
+        for (MarkerOptions m : stops.getMarkers()) {
             map.addMarker(m);
         }
     }
 
-    private void loadRealtimeInfo(String stopId)
-    {
+    private void loadRealtimeInfo(String stopId) {
         MetroRapidService service = MetroRapidApp.from(this).getCapMetroService();
         //TODO:
     }
@@ -82,7 +79,7 @@ public class RouteViewActivity extends BaseLocationActivity {
 
     private void initMap() {
         location = mLocationClient.getLastLocation();
-        if(location != null) {
+        if (location != null) {
             map.setMyLocationEnabled(true);
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13));
         }
@@ -103,7 +100,6 @@ public class RouteViewActivity extends BaseLocationActivity {
     @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
-
     }
 
     @Override

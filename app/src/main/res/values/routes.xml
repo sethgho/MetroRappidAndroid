@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="routes_array">
+        <item>MetroRapid - 801</item>
+        <item>MetroRail - 550</item>
+    </string-array>
+</resources>

@@ -18,8 +18,8 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/TranslucentTheme" >
-        <activity android:name="co.createch.MetroRappid.ui.StopListActivity" >
+        android:theme="@style/AppTheme" >
+        <activity android:name="co.createch.MetroRappid.ui.RouteListActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
