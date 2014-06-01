@@ -15,7 +15,7 @@ import java.util.Collection;
 /**
  * Created by sean on 5/31/14.
  */
-public class RouteMapFragment extends SupportMapFragment {
+public class RouteMapFragment extends SupportMapFragment implements GoogleMap.OnMapLoadedCallback {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,6 +25,7 @@ public class RouteMapFragment extends SupportMapFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        getMap().setOnMapLoadedCallback(this);
     }
 
     public void setRoutePath(PolylineOptions line) {
@@ -44,4 +45,11 @@ public class RouteMapFragment extends SupportMapFragment {
             getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13));
         }
     }
+
+    @Override
+    public void onMapLoaded() {
+
+    }
+
+
 }
