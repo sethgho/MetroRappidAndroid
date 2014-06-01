@@ -131,6 +131,10 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
     }
 
     public void loadTrips(TripInfoCollection trips) {
+        if(trips == null || trips.size() == 0)
+        {
+            return;
+        }
         //Remove existing vehicles if we have any.
         if(mTripMarkers != null)
         {

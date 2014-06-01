@@ -83,6 +83,10 @@ public class RouteViewActivity extends BaseLocationActivity implements RouteMapF
                         responseEnvelope.body.response != null)
                 {
                     TripInfoCollection trips = responseEnvelope.body.response.stop.service.getTripInfoCollection();
+                    if(trips == null || trips.size() < 1)
+                    {
+                        Toast.makeText(getApplicationContext(),"No vehicles currently available", Toast.LENGTH_SHORT).show();
+                    }
                     mMapFragment.loadTrips(trips);
                 }
                 setProgressBarIndeterminateVisibility(false);
