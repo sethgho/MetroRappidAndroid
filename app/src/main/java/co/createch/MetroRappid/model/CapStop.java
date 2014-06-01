@@ -19,10 +19,10 @@ public class CapStop implements Comparable, Parcelable { //extend Maps marker?
     @SerializedName("trip_id")
     public String tripId;
 
-    @SerializedName("latitude")
+    @SerializedName("stop_lat")
     public double latitude;
 
-    @SerializedName("longitude")
+    @SerializedName("stop_lon")
     public double longitude;
 
     @SerializedName("stop_name")

@@ -2,6 +2,7 @@ package co.createch.MetroRappid.ui;
 
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
