@@ -3,7 +3,6 @@ package co.createch.MetroRappid.ui;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -13,16 +12,11 @@ import com.google.android.gms.common.ConnectionResult;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import co.createch.MetroRappid.MetroRapidApp;
-import co.createch.MetroRappidAndroid.R;
 import co.createch.MetroRappid.data.FileStopRepository;
 import co.createch.MetroRappid.data.StopRepository;
 import co.createch.MetroRappid.model.CapStopCollection;
-import co.createch.MetroRappid.model.ResponseEnvelope;
 import co.createch.MetroRappid.model.RouteDirection;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import co.createch.MetroRappidAndroid.R;
 
 /**
  * Created by Seth Gholson on 5/2/14.
@@ -48,15 +42,25 @@ public class StopListActivity extends BaseLocationActivity implements AdapterVie
         initializeAdapter();
         showLoading(R.string.getting_location);
         attachListeners();
-        if (servicesConnected()) {
-            mLocationClient.connect();
-        }
     }
 
     private void attachListeners() {
         mList.setOnItemClickListener(this);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mLocationClient.disconnect();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (servicesConnected()) {
+            mLocationClient.connect();
+        }
+    }
 
     @Override
     public void onConnected(Bundle dataBundle) {
@@ -65,23 +69,6 @@ public class StopListActivity extends BaseLocationActivity implements AdapterVie
             ((StopListAdapter) mList.getAdapter()).updateLocation(location);
         }
         hideLoading();
-        testGetRealtimeData();
-    }
-
-    private void testGetRealtimeData() {
-        ((MetroRapidApp)getApplication()).getCapMetroService().getRealtimeInfo("801", "5867", "xml", 2, "NB", new Callback<ResponseEnvelope>() {
-            @Override
-            public void success(ResponseEnvelope stopResponse, Response response) {
-                Log.d("TEST", "Success!'");
-                Log.d("stopResponse", stopResponse.toString());
-//                Log.d("Response", stopResponse.body.response.stop.service.list.toString());
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d("TEST Fail", error.getMessage());
-            }
-        });
     }
 
     private void initializeAdapter() {
