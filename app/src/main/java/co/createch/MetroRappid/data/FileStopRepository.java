@@ -29,7 +29,7 @@ public class FileStopRepository implements StopRepository {
     }
 
     @Override
-    public CapStopCollection getStopsForRoute(int routeId, RouteDirection direction) {
+    public CapStopCollection getStopsForRoute(String routeId, RouteDirection direction) {
         switch (direction) {
             case North:
                 return getNorthStops();

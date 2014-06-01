@@ -8,5 +8,5 @@ import co.createch.MetroRappid.model.RouteDirection;
  */
 public interface StopRepository {
 
-    public CapStopCollection getStopsForRoute(int routeId, RouteDirection direction);
+    public CapStopCollection getStopsForRoute(String routeId, RouteDirection direction);
 }
