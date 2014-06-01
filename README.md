@@ -1,9 +1,10 @@
+# MetroRappid for Android
 
 On the Google Play store by the end of the week.
 
 
 
-# Problem
+## Problem
 
 - People don't ride the bus because it can seem unreliable: buses arrive anytime from 10 minutes before their scheduled time to 20 minutes after
 - The solution to that is realtime data
