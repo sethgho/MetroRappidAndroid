@@ -46,7 +46,7 @@ public class CapStopCollection extends ArrayList<CapStop> {
                     .draggable(false)
                     .title(s.name)
                     .snippet(s.description)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.stop_red))
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.stop_icon))
                     .anchor(0.5f, 0.5f);
 
             results.put(option, s.stopId);
