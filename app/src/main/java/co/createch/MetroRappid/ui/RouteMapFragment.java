@@ -43,8 +43,7 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
         getMap().setOnMarkerClickListener(this);
     }
 
-    public void loadRouteData(RoutePath path, CapStopCollection stops)
-    {
+    public void loadRouteData(RoutePath path, CapStopCollection stops) {
         clear();
         setRoutePath(path);
         setStops(stops);
@@ -52,8 +51,7 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
     }
 
     private void setRoutePath(RoutePath path) {
-        if(path == null)
-        {
+        if (path == null) {
             return;
         }
         mCurrentPath = path;
@@ -61,22 +59,20 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
     }
 
     private void setStops(CapStopCollection stops) {
-        if(stops == null)
-        {
+        if (stops == null) {
             return;
         }
         mCurrentStops = stops;
         final GoogleMap map = getMap();
         mStopMarkerCache = new HashMap<Marker, String>();
-        Map<MarkerOptions,String> markerOptions = stops.getMarkerHashMap();
+        Map<MarkerOptions, String> markerOptions = stops.getMarkerHashMap();
         for (MarkerOptions mo : markerOptions.keySet()) {
             Marker m = map.addMarker(mo);
             mStopMarkerCache.put(m, markerOptions.get(mo));
         }
     }
 
-    public void setBusMarkers(Collection<MarkerOptions> markers)
-    {
+    public void setBusMarkers(Collection<MarkerOptions> markers) {
         final GoogleMap map = getMap();
         for (MarkerOptions m : markers) {
             map.addMarker(m);
@@ -91,8 +87,7 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
         }
     }
 
-    public void clear()
-    {
+    public void clear() {
         getMap().clear();
     }
 
@@ -101,15 +96,13 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
     }
 
     public void loadTrips(List<TripInfo> trips) {
-        for(TripInfo t : trips)
-        {
+        for (TripInfo t : trips) {
             getMap().addMarker(t.getBusMarker());
         }
     }
 
     private void mapZoomToShowNearestStop() {
-        if(mCurrentLocation == null)
-        {
+        if (mCurrentLocation == null) {
             return;
         }
         mCurrentStops.setLocation(mCurrentLocation);
@@ -136,31 +129,27 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
         LatLng northEast = new LatLng(lat1, lon1);
         LatLngBounds latLngBox = new LatLngBounds(southWest, northEast);
         getMap().moveCamera(CameraUpdateFactory.newLatLngBounds(
-            latLngBox, 250, 250, 30));
+                latLngBox, 250, 250, 30));
     }
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        if(mStopClickListener == null)
-        {
+        if (mStopClickListener == null) {
             return false;
         }
 
         String stopId = mStopMarkerCache.get(marker);
-        if(stopId != null)
-        {
+        if (stopId != null) {
             mStopClickListener.onStopClicked(stopId);
         }
         return false;
     }
 
-    public void setOnStopClickListener(OnStopClickListener listener)
-    {
+    public void setOnStopClickListener(OnStopClickListener listener) {
         mStopClickListener = listener;
     }
 
-    public interface OnStopClickListener
-    {
+    public interface OnStopClickListener {
         public void onStopClicked(String stopId);
     }
 }
