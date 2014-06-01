@@ -1,8 +1,16 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
+        <item name="android:spinnerDropDownItemStyle">@style/DropDownStyle</item>
+    </style>
+
+    <style name="DropDownStyle" parent="@android:style/Widget.Holo.DropDownItem.Spinner" tools:ignore="NewApi">
+        <item name="android:textAppearance">@style/DropDownItemTextStyle</item>
+    </style>
+
+    <style name="DropDownItemTextStyle" parent="@android:style/Widget">
+        <item name="android:textColor">@color/white</item>
     </style>
 
 </resources>
