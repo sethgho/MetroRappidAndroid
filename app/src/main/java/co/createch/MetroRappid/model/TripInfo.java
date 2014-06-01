@@ -1,5 +1,6 @@
 package co.createch.MetroRappid.model;
 
+import android.location.Location;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -13,7 +14,7 @@ import co.createch.MetroRappidAndroid.R;
  * Created by Seth Gholson on 5/31/14.
  */
 @Root(strict = false)
-public class TripInfo {
+public class TripInfo implements Comparable {
 
     @Element(name = "Triptime")
     public String tripTime;
@@ -27,6 +28,9 @@ public class TripInfo {
     @Element(name = "Realtime")
     public TripRealtimeInfo realtimeInfo;
 
+    public Float distance;
+    private boolean isDistanceKnown;
+
     public MarkerOptions getBusMarker()
     {
         MarkerOptions opts = new MarkerOptions();
@@ -36,4 +40,31 @@ public class TripInfo {
         opts.icon(BitmapDescriptorFactory.fromResource(R.drawable.bus_stopped));
         return opts;
     }
+
+    public boolean knowsDistance() {
+        return isDistanceKnown;
+    }
+
+    @Override
+    public int compareTo(Object another) {
+        TripInfo other = (TripInfo)another;
+        if(this.distance > other.distance) {
+            return 1;
+        }else if(this.distance < other.distance) {
+            return -1;
+        }else {
+            return 0;
+        }
+    }
+
+    public void calculateDistanceFromLocation(Location location) {
+        float[] results = new float[3];
+        Location.distanceBetween(location.getLatitude(),location.getLongitude(),
+                this.realtimeInfo.latitude,this.realtimeInfo.longitude, results);
+        if(results.length > 0){
+            isDistanceKnown = true;
+            this.distance = results[0];
+        }
+    }
+
 }

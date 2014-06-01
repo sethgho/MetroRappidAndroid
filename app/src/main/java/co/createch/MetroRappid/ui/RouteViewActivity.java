@@ -16,6 +16,7 @@ import co.createch.MetroRappid.model.ResponseEnvelope;
 import co.createch.MetroRappid.model.RouteDirection;
 import co.createch.MetroRappid.model.RoutePath;
 import co.createch.MetroRappid.model.TripInfo;
+import co.createch.MetroRappid.model.TripInfoCollection;
 import co.createch.MetroRappid.service.MetroRapidService;
 import co.createch.MetroRappidAndroid.R;
 import retrofit.Callback;
@@ -69,7 +70,7 @@ public class RouteViewActivity extends BaseLocationActivity implements RouteMapF
                         responseEnvelope.body != null &&
                         responseEnvelope.body.response != null)
                 {
-                    List<TripInfo> trips = responseEnvelope.body.response.stop.service.trips;
+                    TripInfoCollection trips = responseEnvelope.body.response.stop.service.getTripInfoCollection();
                     mMapFragment.loadTrips(trips);
                 }
                 setProgressBarIndeterminateVisibility(false);

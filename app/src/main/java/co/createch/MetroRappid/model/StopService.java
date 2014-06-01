@@ -20,4 +20,12 @@ public class StopService {
     @ElementList(inline=true, entry="Tripinfo")
     public List<TripInfo> trips;
 
+    public TripInfoCollection getTripInfoCollection() {
+        TripInfoCollection result = new TripInfoCollection();
+        for (TripInfo p: trips) {
+            result.add(p);
+        }
+        return result;
+    }
+
 }

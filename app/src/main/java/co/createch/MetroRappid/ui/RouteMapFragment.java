@@ -11,7 +11,9 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.Collections;
 import java.util.Collection;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +22,7 @@ import co.createch.MetroRappid.model.CapStop;
 import co.createch.MetroRappid.model.CapStopCollection;
 import co.createch.MetroRappid.model.RoutePath;
 import co.createch.MetroRappid.model.TripInfo;
+import co.createch.MetroRappid.model.TripInfoCollection;
 
 /**
  * Created by sean on 5/31/14.
@@ -71,7 +74,18 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
         if (location != null) {
             mCurrentLocation = location;
             getMap().setMyLocationEnabled(true);
-            mapZoomToShowNearestStop();
+
+            mCurrentStops.setLocation(location);
+            double[] lats = new double[2];
+            double[] lons = new double[2];
+
+            lats[0] = mCurrentLocation.getLatitude();
+            lats[1] = mCurrentStops.get(0).latitude;
+
+            lons[0] = mCurrentLocation.getLongitude();
+            lons[1] = mCurrentStops.get(0).longitude;
+
+            mapZoomToShowCoordinates(lats, lons, false);
         }
     }
 
@@ -79,39 +93,60 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
     public void onMapLoaded() {
     }
 
-    public void loadTrips(List<TripInfo> trips) {
+    public void loadTrips(TripInfoCollection trips) {
         for(TripInfo t : trips)
         {
             getMap().addMarker(t.getBusMarker());
         }
+
+        mCurrentStops.setLocation(mCurrentLocation);
+        trips.setLocation(mCurrentLocation);
+
+        CapStop nearStop = mCurrentStops.get(0);
+        TripInfo nearTrip = trips.get(0);
+
+        double[] lats = new double[3];
+        double[] lons = new double[3];
+
+        lats[0] = mCurrentLocation.getLatitude();
+        lats[1] = nearStop.latitude;
+        lats[2] = nearTrip.realtimeInfo.latitude;
+
+        lons[0] = mCurrentLocation.getLongitude();
+        lons[1] = nearStop.longitude;
+        lons[2] = nearTrip.realtimeInfo.longitude;
+
+        mapZoomToShowCoordinates(lats, lons, true);
+
     }
 
-    private void mapZoomToShowNearestStop() {
-        mCurrentStops.setLocation(mCurrentLocation);
-        CapStop stop = mCurrentStops.get(0);
-        double lat0, lon0, lat1, lon1;
+    private void mapZoomToShowCoordinates(double[] latitudes, double[] longitudes,
+            boolean smartZoom) {
+        double lat0 = 1e28;
+        double lon0 = 1e28;
+        double lat1 = -1e28;
+        double lon1 = -1e28;
 
-        if (mCurrentLocation.getLatitude() < stop.latitude) {
-            lat0 = mCurrentLocation.getLatitude();
-            lat1 = stop.latitude;
-        } else {
-            lat0 = stop.latitude;
-            lat1 = mCurrentLocation.getLatitude();
+        for (int i = 0; i < latitudes.length; i++) {
+            lat0 = latitudes[i] < lat0 ? latitudes[i] : lat0;
+            lat1 = latitudes[i] > lat1 ? latitudes[i] : lat1;
         }
 
-        if (mCurrentLocation.getLongitude() < stop.longitude) {
-            lon0 = mCurrentLocation.getLongitude();
-            lon1 = stop.longitude;
-        } else {
-            lon0 = stop.longitude;
-            lon1 = mCurrentLocation.getLongitude();
+        for (int i = 0; i < longitudes.length; i++) {
+            lon0 = longitudes[i] < lon0 ? longitudes[i] : lon0;
+            lon1 = longitudes[i] > lon1 ? longitudes[i] : lon1;
         }
 
         LatLng southWest = new LatLng(lat0, lon0);
         LatLng northEast = new LatLng(lat1, lon1);
         LatLngBounds latLngBox = new LatLngBounds(southWest, northEast);
-        getMap().moveCamera(CameraUpdateFactory.newLatLngBounds(
-            latLngBox, 250, 250, 30));
+        if (smartZoom) {
+            getMap().animateCamera(CameraUpdateFactory.newLatLngBounds(
+                latLngBox, 100));
+        } else {
+            getMap().animateCamera(CameraUpdateFactory.newLatLngBounds(
+                latLngBox, 250, 250, 100));
+        }
     }
 
     @Override
