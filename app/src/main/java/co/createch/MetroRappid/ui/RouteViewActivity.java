@@ -26,6 +26,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class RouteViewActivity extends BaseLocationActivity implements RouteMapFragment.OnStopClickListener, ActionBar.OnNavigationListener {
 
     public final static String TAG = RouteViewActivity.class.getName();
@@ -34,8 +35,10 @@ public class RouteViewActivity extends BaseLocationActivity implements RouteMapF
     private String[] mRouteValues;
 
     private String mRouteId;
+    private RouteDirection mRouteDirection;
     private RouteMapFragment mMapFragment;
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +50,7 @@ public class RouteViewActivity extends BaseLocationActivity implements RouteMapF
             mRouteId = extras.getString(ARG_ROUTE_ID);
         }
         mRouteId = "801";
+        mRouteDirection = RouteDirection.North;
         setupActionBar();
     }
 
@@ -65,8 +69,8 @@ public class RouteViewActivity extends BaseLocationActivity implements RouteMapF
         final RouteRepository pathRepo = MetroRapidApp.from(this).getRouteRepository();
         final StopRepository stopRepo = MetroRapidApp.from(this).getStopRepository();
 
-        final RoutePath path = pathRepo.getShapesForRoute(mRouteId, RouteDirection.North);
-        final CapStopCollection stops = stopRepo.getStopsForRoute(mRouteId, RouteDirection.North);
+        final RoutePath path = pathRepo.getShapesForRoute(mRouteId, mRouteDirection);
+        final CapStopCollection stops = stopRepo.getStopsForRoute(mRouteId, mRouteDirection);
         mMapFragment.loadRouteData(path, stops);
     }
 
@@ -116,6 +120,8 @@ public class RouteViewActivity extends BaseLocationActivity implements RouteMapF
 
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.route_view, menu);
+        MenuItem direction = menu.findItem(R.id.action_direction);
+        direction.setTitle(mRouteDirection == RouteDirection.North ? "N" : "S");
         return true;
     }
 
@@ -124,10 +130,11 @@ public class RouteViewActivity extends BaseLocationActivity implements RouteMapF
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        loadRealtimeInfo("5867");
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_direction) {
+            mRouteDirection = mRouteDirection == RouteDirection.North ? RouteDirection.South : RouteDirection.North;
+            invalidateOptionsMenu();
+            loadRoute();
         }
         return super.onOptionsItemSelected(item);
     }

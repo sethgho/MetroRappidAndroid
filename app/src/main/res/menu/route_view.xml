@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="co.createch.MetroRappid.ui.RouteViewActivity" >
     
-    <item android:id="@+id/action_settings"
+    <item android:id="@+id/action_direction"
         android:title="@string/action_settings"
         android:orderInCategory="100"
-        app:showAsAction="never" />
+        android:showAsAction="always"/>
 </menu>
