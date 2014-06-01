@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by Seth Gholson on 5/31/14.
  */
-public class RouteShape {
+public class RoutePoint {
 
     @SerializedName("shape_id")
     public String shapeId;
@@ -18,8 +18,5 @@ public class RouteShape {
 
     @SerializedName("shape_pt_sequence")
     public int sequence;
-
-    @SerializedName("shape_dist_traveled")
-    public double distanceTraveled;
 
 }
