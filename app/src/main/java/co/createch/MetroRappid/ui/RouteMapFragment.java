@@ -11,11 +11,8 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.Collections;
 import java.util.Collection;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import co.createch.MetroRappid.model.CapStop;
@@ -34,6 +31,7 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
     private CapStop mSelectedStop;
     private Map<Marker, String> mStopMarkerCache;
     private OnStopClickListener mStopClickListener;
+    private HashMap<String, Marker> mTripMarkers;
 
     public void selectStop(String stopId) {
         mSelectedStop = null;
@@ -110,6 +108,7 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
 
             mapZoomToShowCoordinates(lats, lons, false);
         }
+
     }
 
     public void clear() {
@@ -121,9 +120,20 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
     }
 
     public void loadTrips(TripInfoCollection trips) {
+        //Remove existing vehicles if we have any.
+        if(mTripMarkers != null)
+        {
+            for(Marker m : mTripMarkers.values())
+            {
+                m.remove();
+            }
+        }
+        mTripMarkers = new HashMap<String, Marker>();
         for(TripInfo t : trips)
         {
-            getMap().addMarker(t.getBusMarker());
+            Marker m = getMap().addMarker(t.getBusMarker());
+            //Cache the markers so we can remove them later.
+            mTripMarkers.put(t.tripId,m);
         }
 
         mCurrentStops.setLocation(mCurrentLocation);

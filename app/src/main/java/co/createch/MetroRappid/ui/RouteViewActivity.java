@@ -10,8 +10,6 @@ import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import java.util.List;
-
 import co.createch.MetroRappid.MetroRapidApp;
 import co.createch.MetroRappid.data.RouteRepository;
 import co.createch.MetroRappid.data.StopRepository;
@@ -19,7 +17,6 @@ import co.createch.MetroRappid.model.CapStopCollection;
 import co.createch.MetroRappid.model.ResponseEnvelope;
 import co.createch.MetroRappid.model.RouteDirection;
 import co.createch.MetroRappid.model.RoutePath;
-import co.createch.MetroRappid.model.TripInfo;
 import co.createch.MetroRappid.model.TripInfoCollection;
 import co.createch.MetroRappid.service.MetroRapidService;
 import co.createch.MetroRappidAndroid.R;
