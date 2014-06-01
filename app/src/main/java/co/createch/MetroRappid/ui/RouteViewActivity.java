@@ -26,6 +26,7 @@ public class RouteViewActivity extends BaseLocationActivity {
     public final static String TAG = RouteViewActivity.class.getName();
 
     public static final String ARG_ROUTE_ID = "ROUTE_ID";
+    public static final String ARG_ROUTE_NAME = "ROUTE_NAME";
 
     public CapStop stop;
     public Location location;
@@ -42,6 +43,8 @@ public class RouteViewActivity extends BaseLocationActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             mRouteId = extras.getString(ARG_ROUTE_ID);
+            final String title = extras.getString(ARG_ROUTE_NAME);
+            this.setTitle(title);
         }
 
     }

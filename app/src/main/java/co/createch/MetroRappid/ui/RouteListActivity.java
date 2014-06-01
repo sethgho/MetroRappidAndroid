@@ -20,6 +20,8 @@ public class RouteListActivity extends FragmentActivity implements AdapterView.O
     @InjectView(R.id.list)
     public ListView mList;
 
+    private String[] mValues;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,9 +31,10 @@ public class RouteListActivity extends FragmentActivity implements AdapterView.O
     }
 
     private void initList() {
+        mValues = getResources().getStringArray(R.array.routes_array);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1,
-                getResources().getStringArray(R.array.routes_array));
+                mValues);
         mList.setAdapter(adapter);
         mList.setOnItemClickListener(this);
     }
@@ -51,6 +54,7 @@ public class RouteListActivity extends FragmentActivity implements AdapterView.O
         }
         Intent i = new Intent(this,RouteViewActivity.class);
         i.putExtra(RouteViewActivity.ARG_ROUTE_ID, routeId);
+        i.putExtra(RouteViewActivity.ARG_ROUTE_NAME,mValues[position]);
         startActivity(i);
     }
 }
