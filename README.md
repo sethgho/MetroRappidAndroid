@@ -16,7 +16,7 @@ On the Google Play store by the end of the week.
 
 ## What we did
 
-Reverse engineer CapMetro's app and find their hidden API. ![Document it](https://github.com/luqmaan/MetroRappid/wiki/The-CapMetro-API).
+Reverse engineer CapMetro's app and find their hidden API. [Document it](https://github.com/luqmaan/MetroRappid/wiki/The-CapMetro-API).
 Use that API to get the realtime data. Build an Android app that shows realtime arrivals for MetroRapid and MetroRail, really quickly.
 
 ## Our solution
