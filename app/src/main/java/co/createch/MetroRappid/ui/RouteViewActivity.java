@@ -31,7 +31,6 @@ public class RouteViewActivity extends BaseLocationActivity {
 
     public void setMap(GoogleMap map) {
         this.map = map;
-
         if (isConnected) initMap();
     }
 
@@ -40,6 +39,12 @@ public class RouteViewActivity extends BaseLocationActivity {
         map.setMyLocationEnabled(true);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13));
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mLocationClient.disconnect();
     }
 
     @Override
