@@ -8,18 +8,25 @@ import android.view.MenuItem;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import co.createch.MetroRappid.model.CapStop;
+import co.createch.MetroRappid.model.FileRouteRepository;
+import co.createch.MetroRappid.model.RouteDirection;
+import co.createch.MetroRappid.model.RoutePath;
 import co.createch.MetroRappidAndroid.R;
 
 public class RouteViewActivity extends BaseLocationActivity {
 
     public final static String TAG = RouteViewActivity.class.getName();
 
+    public static final String ARG_ROUTE_ID = "ROUTE_ID";
+
     public CapStop stop;
     public Location location;
     public GoogleMap map;
     private boolean isConnected = false;
+    private String mRouteId;
 
     public final static String CAP_STOP = "CAP_STOP";
 
@@ -27,6 +34,23 @@ public class RouteViewActivity extends BaseLocationActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_route_view);
+        Bundle extras = getIntent().getExtras();
+        if(extras != null)
+        {
+            mRouteId = extras.getString(ARG_ROUTE_ID);
+        }
+    }
+
+    private void loadRoute() {
+        FileRouteRepository repo = new FileRouteRepository(getApplicationContext());
+        RoutePath path = repo.getShapesForRoute(mRouteId, RouteDirection.North);
+        loadPath(path);
+    }
+
+    private void loadPath(RoutePath path) {
+        PolylineOptions options = path.getPolyLineOptions();
+        options.color(0xffff0000);
+        map.addPolyline(options);
     }
 
     public void setMap(GoogleMap map) {
@@ -39,6 +63,12 @@ public class RouteViewActivity extends BaseLocationActivity {
         map.setMyLocationEnabled(true);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13));
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadRoute();
     }
 
     @Override
