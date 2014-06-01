@@ -11,7 +11,6 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -84,13 +83,6 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
         }
     }
 
-    public void setBusMarkers(Collection<MarkerOptions> markers) {
-        final GoogleMap map = getMap();
-        for (MarkerOptions m : markers) {
-            map.addMarker(m);
-        }
-    }
-
     public void setLocation(Location location) {
         if (location != null) {
             mCurrentLocation = location;
@@ -107,8 +99,24 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
             lons[1] = mCurrentStops.get(0).longitude;
 
             mapZoomToShowCoordinates(lats, lons, false);
+            selectNearestStop();
         }
+    }
 
+    public void selectNearestStop()
+    {
+        Marker nearestMarker = null;
+        CapStop nearestStop = mCurrentStops.get(0);
+        for(Marker m : mStopMarkerCache.keySet())
+        {
+            if(nearestStop.stopId.equals(mStopMarkerCache.get(m)))
+            {
+                nearestMarker = m;
+            }
+        }
+        if(nearestMarker != null) {
+            nearestMarker.showInfoWindow();
+        }
     }
 
     public void clear() {
