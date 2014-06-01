@@ -37,7 +37,11 @@ public class TripInfo implements Comparable {
         opts.draggable(false);
         opts.position(new LatLng(realtimeInfo.latitude,realtimeInfo.longitude));
         opts.title(String.format("Last Seen: %s", realtimeInfo.pollTime));
-        opts.icon(BitmapDescriptorFactory.fromResource(R.drawable.bus_stopped));
+        if (realtimeInfo.isStopped == "N") {
+            opts.icon(BitmapDescriptorFactory.fromResource(R.drawable.bus_stopped));
+        } else {
+            opts.icon(BitmapDescriptorFactory.fromResource(R.drawable.bus_moving));
+        }
         return opts;
     }
 
