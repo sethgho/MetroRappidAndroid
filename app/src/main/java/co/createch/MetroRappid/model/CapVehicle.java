@@ -4,16 +4,14 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
-import java.util.List;
-
 /**
  * Created by Seth Gholson on 5/31/14.
  */
 
 @Root(strict = false)
 public class CapVehicle {
-//    @Element(name = "Route")
-//    public String routeId;
+    @Element(name = "Route")
+    public String routeId;
 
     @Element(name = "Updatetime")
     public String updateTime;
@@ -30,7 +28,8 @@ public class CapVehicle {
     @Element(name = "Heading")
     public String heading;
 
-    @ElementList(name = "Positions")
-    public List<String> positions;
+    @ElementList(name = "Positions", type = CapVehiclePosition.class)
+    public CapVehiclePositionCollection positions;
 }
+
 

@@ -10,7 +10,7 @@ import co.createch.MetroRappid.model.BusLocationResponseEnvelope;
 
 public class BusLocationResponseTest extends TestCase {
 
-    public void test_response_deserialization() throws Exception {
+    public void test_valid_response_deserialization() throws Exception {
         Serializer serializer = new Persister();
         BusLocationResponseEnvelope response = serializer.read(BusLocationResponseEnvelope.class, "<?xml version=\"1.0\"?>\n" +
                 "<soap:Envelope \n" +
@@ -111,10 +111,75 @@ public class BusLocationResponseTest extends TestCase {
                 "</soap:Envelope>\n");
 
         Assert.assertNotNull(response);
-        Assert.assertEquals(111,response.body.response.responseCode);
+        Assert.assertEquals(111, response.body.response.responseCode);
         Assert.assertNotNull(response.body.response.vehicles);
         Assert.assertTrue(response.body.response.vehicles.size() > 0);
+    }
 
+    public void test_missing_vehicle_response() throws Exception {
+        Serializer serializer = new Persister();
+        BusLocationResponseEnvelope response = serializer.read(BusLocationResponseEnvelope.class, "<?xml version=\"1.0\"?>\n" +
+                "<soap:Envelope \n" +
+                "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" \n" +
+                "    xmlns:soapenc=\"http://schemas.xmlsoap.org/soap/encoding/\" \n" +
+                "    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" soap:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\" \n" +
+                "    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
+                "    <soap:Body>\n" +
+                "        <BuslocationResponse \n" +
+                "            xmlns=\"AT_WEB\">\n" +
+                "            <Version>1.0</Version>\n" +
+                "            <Responsecode>111</Responsecode>\n" +
+                "            <Input>\n" +
+                "                <Route>801</Route>\n" +
+                "                <Direction>N</Direction>\n" +
+                "            </Input>\n" +
+                "            <Mapextents>30.204035,-97.775078,30.371565,-97.692177</Mapextents>\n" +
+                "            <Requestor>192.168.10.91</Requestor>\n" +
+                "            <Host>cmtaatisweb2</Host>\n" +
+                "            <Copyright>XML schema Copyright (c) 2003-2013 Trapeze Software ULC, its subsidiaries and affiliates.  All rights reserved.</Copyright>\n" +
+                "            <Soapversion>2.6.3 - 09/23/13</Soapversion>\n" +
+                "        </BuslocationResponse>\n" +
+                "    </soap:Body>\n" +
+                "</soap:Envelope>\n");
+
+        Assert.assertNotNull(response);
+        Assert.assertEquals(111, response.body.response.responseCode);
+        Assert.assertNotNull(response.body.response.vehicles);
+        Assert.assertTrue(response.body.response.vehicles.size() == 0);
+    }
+
+    public void test_empty_vehicle_response() throws Exception {
+        Serializer serializer = new Persister();
+        BusLocationResponseEnvelope response = serializer.read(BusLocationResponseEnvelope.class, "<?xml version=\"1.0\"?>\n" +
+                "<soap:Envelope \n" +
+                "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" \n" +
+                "    xmlns:soapenc=\"http://schemas.xmlsoap.org/soap/encoding/\" \n" +
+                "    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" soap:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\" \n" +
+                "    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
+                "    <soap:Body>\n" +
+                "        <BuslocationResponse \n" +
+                "            xmlns=\"AT_WEB\">\n" +
+                "            <Version>1.0</Version>\n" +
+                "            <Responsecode>111</Responsecode>\n" +
+                "            <Input>\n" +
+                "                <Route>801</Route>\n" +
+                "                <Direction>N</Direction>\n" +
+                "            </Input>\n" +
+                "            <Vehicles>\n" +
+                "            </Vehicles>\n" +
+                "            <Mapextents>30.204035,-97.775078,30.371565,-97.692177</Mapextents>\n" +
+                "            <Requestor>192.168.10.91</Requestor>\n" +
+                "            <Host>cmtaatisweb2</Host>\n" +
+                "            <Copyright>XML schema Copyright (c) 2003-2013 Trapeze Software ULC, its subsidiaries and affiliates.  All rights reserved.</Copyright>\n" +
+                "            <Soapversion>2.6.3 - 09/23/13</Soapversion>\n" +
+                "        </BuslocationResponse>\n" +
+                "    </soap:Body>\n" +
+                "</soap:Envelope>\n");
+
+        Assert.assertNotNull(response);
+        Assert.assertEquals(111, response.body.response.responseCode);
+        Assert.assertNotNull(response.body.response.vehicles);
+        Assert.assertTrue(response.body.response.vehicles.size() == 0);
     }
 }
 
