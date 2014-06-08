@@ -42,6 +42,10 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:1.5.0'
     compile 'com.jakewharton:butterknife:4.0.1'
     compile 'com.google.code.gson:gson:2.2.4'
+    compile('de.keyboardsurfer.android.widget:crouton:1.8.4') {
+      // exclusion is not neccessary, but generally a good idea.
+      exclude group: 'com.google.android', module: 'support-v4'
+    }
     compile ('org.simpleframework:simple-xml:2.7.1') {
         exclude module: 'stax'
         exclude module: 'stax-api'

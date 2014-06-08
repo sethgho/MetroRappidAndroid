@@ -2,13 +2,16 @@ package co.createch.MetroRappid.ui;
 
 import android.annotation.TargetApi;
 import android.app.ActionBar;
+import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
+
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 
 import co.createch.MetroRappid.MetroRapidApp;
 import co.createch.MetroRappid.data.RouteRepository;
@@ -31,6 +34,8 @@ public class RouteViewActivity extends BaseLocationActivity implements RouteMapF
 
     public static final String ARG_ROUTE_ID = "ROUTE_ID";
     private String[] mRouteValues;
+
+    private Activity activity = this;
 
     private String mRouteId;
     private RouteDirection mRouteDirection;
@@ -85,7 +90,7 @@ public class RouteViewActivity extends BaseLocationActivity implements RouteMapF
                     TripInfoCollection trips = responseEnvelope.body.response.stop.service.getTripInfoCollection();
                     if(trips == null || trips.size() < 1)
                     {
-                        Toast.makeText(getApplicationContext(),"No vehicles currently available", Toast.LENGTH_SHORT).show();
+                        Crouton.makeText(activity,"No vehicles currently available", Style.ALERT).show();
                     }
                     mMapFragment.loadTrips(trips);
                 }
@@ -94,7 +99,7 @@ public class RouteViewActivity extends BaseLocationActivity implements RouteMapF
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getApplicationContext(), String.format("Error: %s", error.getMessage()), Toast.LENGTH_LONG).show();
+                Crouton.makeText(activity, String.format("Error: %s", error.getMessage()), Style.ALERT).show();
                 setProgressBarIndeterminateVisibility(false);
             }
         });
