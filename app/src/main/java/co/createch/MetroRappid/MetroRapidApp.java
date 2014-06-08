@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.app.Application;
 import android.util.Log;
 
+import org.acra.*;
+import org.acra.annotation.*;
+
 import co.createch.MetroRappid.data.FileStopRepository;
 import co.createch.MetroRappid.data.RouteRepository;
 import co.createch.MetroRappid.data.StopRepository;
@@ -12,9 +15,18 @@ import co.createch.MetroRappid.service.MetroRapidService;
 import co.createch.MetroRappid.service.converter.SimpleXMLConverter;
 import retrofit.RestAdapter;
 
+
 /**
  * Created by Caskman on 5/31/2014.
  */
+@ReportsCrashes(
+        formKey = "",
+        formUri = "http://188.226.246.30:5984/acra-metrorappid/_design/acra-storage/_update/report",
+        reportType = org.acra.sender.HttpSender.Type.JSON,
+        httpMethod = org.acra.sender.HttpSender.Method.PUT,
+        formUriBasicAuthLogin = "meow",
+        formUriBasicAuthPassword = "meow"
+)
 public class MetroRapidApp extends Application {
 
     public static final String TAG = MetroRapidApp.class.getName();
@@ -31,6 +43,7 @@ public class MetroRapidApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        ACRA.init(this);
         RestAdapter adapter = new RestAdapter.Builder().setEndpoint("http://www.capmetro.org")
                 .setConverter(new SimpleXMLConverter())
                 .build();
