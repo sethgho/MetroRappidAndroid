@@ -11,8 +11,12 @@ public class BusLocationResponse {
 //    @Path("Envelope/Body/BuslocationResponse")
     public int responseCode;
 
-    @ElementList(name = "Vehicles", type=CapVehicle.class)
+    @ElementList(name = "Vehicles", type = CapVehicle.class, required = false)
 //    @Path("soap:Envelope/soap:Body/BuslocationResponse")
     public CapVehicleCollection vehicles;
+
+    public BusLocationResponse() {
+        vehicles = new CapVehicleCollection();
+    }
 
 }

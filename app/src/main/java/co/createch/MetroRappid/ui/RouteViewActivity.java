@@ -118,6 +118,7 @@ public class RouteViewActivity extends BaseLocationActivity implements RouteMapF
             @Override
             public void failure(RetrofitError error) {
                 Toast.makeText(RouteViewActivity.this, "No vehicles currently available", Toast.LENGTH_SHORT).show();
+                setProgressBarIndeterminateVisibility(false);
             }
         });
     }
