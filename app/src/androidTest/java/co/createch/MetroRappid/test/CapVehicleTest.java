@@ -42,6 +42,7 @@ public class CapVehicleTest extends TestCase {
         Assert.assertEquals("09:42 PM", vehicle.updateTime);
         Assert.assertEquals(6, vehicle.positions.size());
         CapVehiclePosition firstpos = vehicle.positions.get(0);
-        Assert.assertEquals(30d, vehicle.positions.get(0).getLatLng().latitude);
+        Assert.assertEquals(30.371565d, vehicle.positions.get(0).getLatLng().latitude);
+        Assert.assertEquals(-97.692177d, vehicle.positions.get(0).getLatLng().longitude);
     }
 }
