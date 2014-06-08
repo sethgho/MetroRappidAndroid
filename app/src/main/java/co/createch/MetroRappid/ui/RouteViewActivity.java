@@ -87,7 +87,7 @@ public class RouteViewActivity extends BaseLocationActivity implements RouteMapF
                         responseEnvelope.body != null &&
                         responseEnvelope.body.response != null)
                 {
-                    TripInfoCollection trips = responseEnvelope.body.response.stop.service.getTripInfoCollection();
+                    TripInfoCollection trips = responseEnvelope.body.response.stop.services.get(0).getTripInfoCollection();
                     if(trips == null || trips.size() < 1)
                     {
                         Crouton.makeText(activity,"No vehicles currently available", Style.ALERT).show();

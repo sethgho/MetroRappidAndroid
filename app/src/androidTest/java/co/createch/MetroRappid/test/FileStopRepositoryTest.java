@@ -18,7 +18,7 @@ public class FileStopRepositoryTest extends InstrumentationTestCase {
     {
         Context context = getInstrumentation().getTargetContext();
         FileStopRepository repo = new FileStopRepository(context);
-        List<CapStop> stops = repo.getStopsForRoute(801, RouteDirection.North);
+        List<CapStop> stops = repo.getStopsForRoute("801", RouteDirection.North);
         assertNotNull(stops);
 
         CapStop firstStop = stops.get(0);
