@@ -20,6 +20,11 @@ public class StopService {
     @ElementList(inline = true, entry = "Tripinfo")
     public List<TripInfo> trips;
 
+    public RouteDirection getRouteDirection() {
+        // We're assuming the two choices are N and S
+        return RouteDirection.findByKey(direction == "N" ? 1 : 0);
+    }
+
     public TripInfoCollection getTripInfoCollection() {
         TripInfoCollection result = new TripInfoCollection();
         for (TripInfo p : trips) {
