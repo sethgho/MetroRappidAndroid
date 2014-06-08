@@ -2,7 +2,7 @@ apply plugin: 'android'
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "19.0.0"
+    buildToolsVersion "19.1.0"
 
     lintOptions {
         abortOnError false
@@ -47,5 +47,6 @@ dependencies {
         exclude module: 'stax-api'
         exclude module: 'xpp3'
     }
+    compile 'ch.acra:acra:4.5.0'
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
