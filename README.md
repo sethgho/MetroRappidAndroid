@@ -1,6 +1,6 @@
 # MetroRappid for Android
 
-![MetroRappid for Android logo](https://cloud.githubusercontent.com/assets/1275831/3142690/945821cc-e9ce-11e3-894f-604816d916fc.png)
+![MetroRappid for Android logo](https://cloud.githubusercontent.com/assets/1275831/3210441/0128e4a2-eec1-11e3-8622-fc947f7c305c.png)
 
 On the Google Play store by the end of the week.
 
