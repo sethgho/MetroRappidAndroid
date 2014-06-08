@@ -17,7 +17,7 @@ import co.createch.MetroRappid.MetroRapidApp;
 import co.createch.MetroRappid.data.RouteRepository;
 import co.createch.MetroRappid.data.StopRepository;
 import co.createch.MetroRappid.model.CapStopCollection;
-import co.createch.MetroRappid.model.ResponseEnvelope;
+import co.createch.MetroRappid.model.RealtimeInfoResponseEnvelope;
 import co.createch.MetroRappid.model.RouteDirection;
 import co.createch.MetroRappid.model.RoutePath;
 import co.createch.MetroRappid.model.TripInfoCollection;
@@ -80,9 +80,9 @@ public class RouteViewActivity extends BaseLocationActivity implements RouteMapF
     private void loadRealtimeInfo(String stopId) {
         MetroRapidService service = MetroRapidApp.from(this).getCapMetroService();
         setProgressBarIndeterminateVisibility(true);
-        service.getRealtimeInfo(mRouteId, stopId, "xml", "X", "NB", new Callback<ResponseEnvelope>() {
+        service.getRealtimeInfo(mRouteId, stopId, "xml", "X", "NB", new Callback<RealtimeInfoResponseEnvelope>() {
             @Override
-            public void success(ResponseEnvelope responseEnvelope, Response response) {
+            public void success(RealtimeInfoResponseEnvelope responseEnvelope, Response response) {
                 if (responseEnvelope != null &&
                         responseEnvelope.body != null &&
                         responseEnvelope.body.response != null)

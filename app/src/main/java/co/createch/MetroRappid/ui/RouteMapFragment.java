@@ -151,8 +151,10 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
             mTripMarkers.put(t.tripId,m);
         }
 
-        mCurrentStops.setLocation(mCurrentLocation);
-        trips.setLocation(mCurrentLocation);
+        if(mCurrentLocation != null) {
+            mCurrentStops.setLocation(mCurrentLocation);
+            trips.setLocation(mCurrentLocation);
+        }
 
         CapStop nearStop = mSelectedStop == null ? mCurrentStops.get(0) : mSelectedStop;
         TripInfo nearTrip = trips.get(0);

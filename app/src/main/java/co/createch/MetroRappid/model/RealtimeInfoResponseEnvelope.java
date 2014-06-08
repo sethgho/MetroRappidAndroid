@@ -5,7 +5,7 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 @Root(strict=false)
-public class ResponseEnvelope
+public class RealtimeInfoResponseEnvelope
 {
     @Element(name="Body")
     public StopResponseBody body;
