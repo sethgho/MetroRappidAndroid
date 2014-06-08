@@ -17,6 +17,7 @@ public interface MetroRapidService {
                                 @Query("tool") String tool,
                                 Callback<RealtimeInfoResponseEnvelope> cb);
 
+    @GET("/planner/s_buslocation.asp")
     public void getBusLocations(@Query("route") String routeId, @Query("dir") String direction,
                                 Callback<BusLocationResponseEnvelope> cb);
 }
