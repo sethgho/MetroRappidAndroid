@@ -25,4 +25,12 @@ public enum RouteDirection {
     {
         return key;
     }
+
+    public String getDirectionString() {
+        switch(key) {
+            case 0: return "sb";
+            case 1: return "nb";
+            default: return null;
+        }
+    }
 }

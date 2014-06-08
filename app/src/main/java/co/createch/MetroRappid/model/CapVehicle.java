@@ -12,8 +12,8 @@ import java.util.List;
 
 @Root(strict = false)
 public class CapVehicle {
-    @Element(name = "Route")
-    public String routeId;
+//    @Element(name = "Route")
+//    public String routeId;
 
     @Element(name = "Updatetime")
     public String updateTime;
