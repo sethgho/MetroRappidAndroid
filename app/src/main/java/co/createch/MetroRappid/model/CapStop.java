@@ -51,11 +51,21 @@ public class CapStop implements Comparable, Parcelable { //extend Maps marker?
     }
 
     public void calculateDistanceFromLocation(Location location) {
-        float[] results = new float[3];
-        Location.distanceBetween(location.getLatitude(),location.getLongitude(),this.latitude,this.longitude, results);
-        if(results.length > 0){
-            isDistanceKnown = true;
-            this.distance = results[0];
+        if (location != null) {
+            float[] results = new float[3];
+            Location.distanceBetween(
+                location.getLatitude(),
+                location.getLongitude(),
+                this.latitude,
+                this.longitude,
+                results);
+            if(results.length > 0){
+                isDistanceKnown = true;
+                this.distance = results[0];
+            }
+        } else {
+            isDistanceKnown = false;
+            this.distance = Float.POSITIVE_INFINITY;
         }
     }
 
