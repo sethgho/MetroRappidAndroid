@@ -18,11 +18,13 @@ import co.createch.MetroRappidAndroid.R;
 public class TripInfoCollection extends ArrayList<TripInfo> {
 
     public void setLocation(Location location) {
-        for(TripInfo trip : this)
-        {
-            trip.calculateDistanceFromLocation(location);
-        }
-        Collections.sort(this);
+        if (location != null) {
+            for(TripInfo trip : this)
+            {
+                trip.calculateDistanceFromLocation(location);
+            }
+            Collections.sort(this);
+        };
     }
 
 }
