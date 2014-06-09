@@ -88,7 +88,9 @@ public class StopListAdapter extends BaseAdapter implements ListAdapter {
     }
 
     public void updateLocation(Location location) {
-        mList.setLocation(location);
-        notifyDataSetChanged();
+        if (location != null) {
+            mList.setLocation(location);
+            notifyDataSetChanged();
+        }
     }
 }

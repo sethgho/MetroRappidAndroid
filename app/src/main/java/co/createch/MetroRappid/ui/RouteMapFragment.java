@@ -151,27 +151,27 @@ public class RouteMapFragment extends SupportMapFragment implements GoogleMap.On
             mTripMarkers.put(t.tripId,m);
         }
 
-        if(mCurrentLocation != null) {
+        // The rest of this depends on us having a location defined
+        if (mCurrentLocation == null) {
             mCurrentStops.setLocation(mCurrentLocation);
             trips.setLocation(mCurrentLocation);
+
+            CapStop nearStop = mSelectedStop == null ? mCurrentStops.get(0) : mSelectedStop;
+            TripInfo nearTrip = trips.get(0);
+
+            double[] lats = new double[3];
+            double[] lons = new double[3];
+
+            lats[0] = mCurrentLocation.getLatitude();
+            lats[1] = nearStop.latitude;
+            lats[2] = nearTrip.realtimeInfo.latitude;
+
+            lons[0] = mCurrentLocation.getLongitude();
+            lons[1] = nearStop.longitude;
+            lons[2] = nearTrip.realtimeInfo.longitude;
+
+            mapZoomToShowCoordinates(lats, lons, true);
         }
-
-        CapStop nearStop = mSelectedStop == null ? mCurrentStops.get(0) : mSelectedStop;
-        TripInfo nearTrip = trips.get(0);
-
-        double[] lats = new double[3];
-        double[] lons = new double[3];
-
-        lats[0] = mCurrentLocation.getLatitude();
-        lats[1] = nearStop.latitude;
-        lats[2] = nearTrip.realtimeInfo.latitude;
-
-        lons[0] = mCurrentLocation.getLongitude();
-        lons[1] = nearStop.longitude;
-        lons[2] = nearTrip.realtimeInfo.longitude;
-
-        mapZoomToShowCoordinates(lats, lons, true);
-
     }
 
     public void mapZoomToShowNearestStop() {
