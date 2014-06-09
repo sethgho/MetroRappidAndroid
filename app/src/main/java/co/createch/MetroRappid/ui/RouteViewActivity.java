@@ -5,24 +5,24 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
-
 import co.createch.MetroRappid.MetroRapidApp;
 import co.createch.MetroRappid.data.RouteRepository;
 import co.createch.MetroRappid.data.StopRepository;
 import co.createch.MetroRappid.model.CapStopCollection;
-import co.createch.MetroRappid.model.ResponseEnvelope;
+import co.createch.MetroRappid.model.RealtimeInfoResponseEnvelope;
 import co.createch.MetroRappid.model.RouteDirection;
 import co.createch.MetroRappid.model.RoutePath;
 import co.createch.MetroRappid.model.TripInfoCollection;
 import co.createch.MetroRappid.service.MetroRapidService;
 import co.createch.MetroRappidAndroid.R;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -80,9 +80,9 @@ public class RouteViewActivity extends BaseLocationActivity implements RouteMapF
     private void loadRealtimeInfo(String stopId) {
         MetroRapidService service = MetroRapidApp.from(this).getCapMetroService();
         setProgressBarIndeterminateVisibility(true);
-        service.getRealtimeInfo(mRouteId, stopId, "xml", "X", "NB", new Callback<ResponseEnvelope>() {
+        service.getRealtimeInfo(mRouteId, stopId, "xml", "X", "NB", new Callback<RealtimeInfoResponseEnvelope>() {
             @Override
-            public void success(ResponseEnvelope responseEnvelope, Response response) {
+            public void success(RealtimeInfoResponseEnvelope responseEnvelope, Response response) {
                 if (responseEnvelope != null &&
                         responseEnvelope.body != null &&
                         responseEnvelope.body.response != null)
@@ -99,10 +99,38 @@ public class RouteViewActivity extends BaseLocationActivity implements RouteMapF
 
             @Override
             public void failure(RetrofitError error) {
-                Crouton.makeText(activity, String.format("Error: %s", error.getMessage()), Style.ALERT).show();
+                Log.e(TAG,error.getMessage());
+                if(error.getCause().getMessage().contains("Fault")) {
+                    Crouton.makeText(activity, String.format("Unable to get vehicles for this location."), Style.ALERT).show();
+                }else {
+                    Crouton.makeText(activity, String.format("Error: %s", error.getMessage()), Style.ALERT).show();
+                }
                 setProgressBarIndeterminateVisibility(false);
             }
         });
+//        service.getBusLocations(mRouteId, mRouteDirection.getDirectionString(), new Callback<BusLocationResponseEnvelope>() {
+//            @Override
+//            public void success(BusLocationResponseEnvelope responseEnvelope, Response response) {
+//                if (responseEnvelope != null &&
+//                        responseEnvelope.body != null &&
+//                        responseEnvelope.body.response != null)
+//                {
+//                    CapVehicleCollection vehicles = responseEnvelope.body.response.vehicles;
+//                    if(vehicles== null || vehicles.size() < 1)
+//                    {
+//                        Crouton.makeText(activity,"No vehicles currently available", Style.ALERT).show();
+//                    }
+////                    mMapFragment.loadTrips(trips);
+//                }
+//                setProgressBarIndeterminateVisibility(false);
+//            }
+//
+//            @Override
+//            public void failure(RetrofitError error) {
+//                Crouton.makeText(activity, String.format("Error: %s", error.getMessage()), Style.ALERT).show();
+//                setProgressBarIndeterminateVisibility(false);
+//            }
+//        });
     }
 
     @Override
