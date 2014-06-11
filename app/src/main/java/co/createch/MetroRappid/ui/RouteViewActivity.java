@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 
+import java.util.ArrayList;
+
 import co.createch.MetroRappid.MetroRapidApp;
 import co.createch.MetroRappid.data.RouteRepository;
 import co.createch.MetroRappid.data.StopRepository;
@@ -18,6 +20,7 @@ import co.createch.MetroRappid.model.CapStopCollection;
 import co.createch.MetroRappid.model.RealtimeInfoResponseEnvelope;
 import co.createch.MetroRappid.model.RouteDirection;
 import co.createch.MetroRappid.model.RoutePath;
+import co.createch.MetroRappid.model.StopService;
 import co.createch.MetroRappid.model.TripInfoCollection;
 import co.createch.MetroRappid.service.MetroRapidService;
 import co.createch.MetroRappidAndroid.R;
@@ -87,7 +90,15 @@ public class RouteViewActivity extends BaseLocationActivity implements RouteMapF
                         responseEnvelope.body != null &&
                         responseEnvelope.body.response != null)
                 {
-                    TripInfoCollection trips = responseEnvelope.body.response.stop.service.getTripInfoCollection();
+                    ArrayList<StopService> services = responseEnvelope.body.response.stop.services;
+                    StopService stopService = services.get(0);
+                    for (StopService s : services) {
+                        if (s.getRouteDirection() == mRouteDirection) {
+                            stopService = s;
+                            break;
+                        }
+                    }
+                    TripInfoCollection trips = stopService.getTripInfoCollection();
                     if(trips == null || trips.size() < 1)
                     {
                         Crouton.makeText(activity,"No vehicles currently available", Style.ALERT).show();

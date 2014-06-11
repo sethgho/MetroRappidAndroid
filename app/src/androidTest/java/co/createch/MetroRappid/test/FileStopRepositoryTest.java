@@ -26,7 +26,7 @@ public class FileStopRepositoryTest extends InstrumentationTestCase {
         assertEquals("1335341",firstStop.tripId);
         assertEquals("5873", firstStop.stopId);
         assertEquals("Northeast corner of TURK and CULLEN - Mid-Block", firstStop.description);
-        assertEquals(30.162951d,firstStop.latitude);
-        assertEquals(-97.790488d, firstStop.longitude);
+        assertEquals(30.162951, firstStop.latitude);
+        assertEquals(-97.790488, firstStop.longitude);
     }
 }

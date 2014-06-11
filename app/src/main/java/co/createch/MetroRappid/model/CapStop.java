@@ -100,7 +100,6 @@ public class CapStop implements Comparable, Parcelable { //extend Maps marker?
         dest.writeString(this.name);
         dest.writeString(this.description);
         dest.writeInt(this.stopSequence);
-        dest.writeInt(this.direction == null ? -1 : this.direction.ordinal());
         dest.writeString(this.headsign);
         dest.writeFloat(this.distance);
         dest.writeByte(isDistanceKnown ? (byte) 1 : (byte) 0);
@@ -118,8 +117,6 @@ public class CapStop implements Comparable, Parcelable { //extend Maps marker?
         this.name = in.readString();
         this.description = in.readString();
         this.stopSequence = in.readInt();
-        int tmpDirection = in.readInt();
-        this.direction = tmpDirection == -1 ? null : RouteDirection.values()[tmpDirection];
         this.headsign = in.readString();
         this.distance = in.readFloat();
         this.isDistanceKnown = in.readByte() != 0;
