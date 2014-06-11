@@ -1,5 +1,10 @@
 apply plugin: 'android'
 
+if(project.hasProperty("metrorappid.signing")
+        && new File(project.property("metrorappid.signing") + ".gradle").exists()) {
+    apply from: project.property("metrorappid.signing") + ".gradle";
+}
+
 android {
     compileSdkVersion 19
     buildToolsVersion "19.1.0"
