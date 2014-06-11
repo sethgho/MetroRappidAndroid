@@ -62,12 +62,21 @@ public class TripInfo implements Comparable {
     }
 
     public void calculateDistanceFromLocation(Location location) {
-        float[] results = new float[3];
-        Location.distanceBetween(location.getLatitude(),location.getLongitude(),
-                this.realtimeInfo.latitude,this.realtimeInfo.longitude, results);
-        if(results.length > 0){
-            isDistanceKnown = true;
-            this.distance = results[0];
+        if (location != null) {
+            float[] results = new float[3];
+            Location.distanceBetween(
+                location.getLatitude(),
+                location.getLongitude(),
+                this.realtimeInfo.latitude,
+                this.realtimeInfo.longitude,
+                results);
+            if (results.length > 0) {
+                isDistanceKnown = true;
+                this.distance = results[0];
+            }
+        } else {
+            isDistanceKnown = false;
+            this.distance = Float.POSITIVE_INFINITY;
         }
     }
 
