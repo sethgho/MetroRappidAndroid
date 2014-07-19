@@ -2,7 +2,7 @@
 
 ![MetroRappid for Android logo](https://cloud.githubusercontent.com/assets/1275831/3210441/0128e4a2-eec1-11e3-8622-fc947f7c305c.png)
 
-~~~On the Google Play store by the end of the week.~~~ Abandoned in favor of [MetroRappid.com](http://metrorappid.com). Source at [github.com/luqmaan/MetroRappid](github.com/luqmaan/MetroRappid)
+~~On the Google Play store by the end of the week.~~ Abandoned in favor of [MetroRappid.com](http://metrorappid.com). Source at [github.com/luqmaan/MetroRappid](github.com/luqmaan/MetroRappid)
 
 MetroRappid for Android (winner of ATX Hack For Change) launched, but had problems working with the Google Maps API. :crying_cat_face: We ended up taking it down from the Play Market and began working on a more open solution, and so was born [github.com/luqmaan/MetroRappid](github.com/luqmaan/MetroRappid).
 
